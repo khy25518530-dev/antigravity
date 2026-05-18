@@ -1,3 +1,12 @@
 {
-  "developer": "qwen3.5-27b-claude-4.6-opus-reasoning-distilled"
+  "ceo": "qwen2.5-1.5b-instruct",
+  "youtube": "openai-community-gpt2-smashed",
+  "instagram": "openai-community-gpt2-smashed",
+  "designer": "google/gemma-4-e2b",
+  "developer": "qwen3.5-27b-claude-4.6-opus-reasoning-distilled",
+  "business": "openai-community-gpt2-smashed",
+  "secretary": "openai-community-gpt2-smashed",
+  "editor": "openai-community-gpt2-smashed",
+  "writer": "openai-community-gpt2-smashed",
+  "researcher": "openai-community-gpt2-smashed"
 }
