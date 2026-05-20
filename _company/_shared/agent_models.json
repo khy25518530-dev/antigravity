@@ -1,12 +1,12 @@
 {
-  "ceo": "qwen2.5-1.5b-instruct",
-  "youtube": "openai-community-gpt2-smashed",
-  "instagram": "openai-community-gpt2-smashed",
-  "designer": "google/gemma-4-e2b",
-  "developer": "qwen3.5-27b-claude-4.6-opus-reasoning-distilled",
-  "business": "openai-community-gpt2-smashed",
-  "secretary": "openai-community-gpt2-smashed",
-  "editor": "openai-community-gpt2-smashed",
-  "writer": "openai-community-gpt2-smashed",
-  "researcher": "openai-community-gpt2-smashed"
+  "ceo": "qwen2.5-1.5b-instruct:2",
+  "youtube": "qwen2.5-1.5b-instruct:2",
+  "instagram": "qwen2.5-1.5b-instruct:2",
+  "designer": "qwen2.5-1.5b-instruct:2",
+  "developer": "qwen2.5-1.5b-instruct:2",
+  "business": "qwen2.5-1.5b-instruct:2",
+  "secretary": "qwen2.5-1.5b-instruct:2",
+  "editor": "qwen2.5-1.5b-instruct:2",
+  "writer": "qwen2.5-1.5b-instruct:2",
+  "researcher": "qwen2.5-1.5b-instruct:2"
 }
