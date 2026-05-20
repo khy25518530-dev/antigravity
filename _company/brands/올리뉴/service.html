@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>올리뉴 서비스 — 기술로 다시 짓는 공간</title>
+<style>
+  :root {
+    --primary: #1a3a26;
+    --primary-light: #2d4f35;
+    --primary-dark: #0f2818;
+    --accent: #e8a874;
+    --bg: #f5ebd9;
+    --bg-dark: #ebdcc0;
+    --text: #2a2a2a;
+    --text-light: #6b6b6b;
+    --border: #e8dcc6;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', sans-serif;
+    color: var(--text);
+    background: var(--bg);
+    line-height: 1.6;
+  }
+
+  /* 상단 안내 바 */
+  .preview-banner {
+    background: #1a1a1a;
+    color: white;
+    padding: 10px 24px;
+    font-size: 13px;
+    text-align: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .preview-banner a {
+    color: var(--accent);
+    margin-left: 12px;
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  /* 헤더 */
+  header {
+    background: white;
+    padding: 16px 48px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 38px;
+    z-index: 50;
+  }
+  .logo {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    color: var(--primary);
+    text-decoration: none;
+  }
+  nav ul {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+  nav a {
+    color: var(--text);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 15px;
+  }
+  nav a:hover, nav a.active { color: var(--primary); font-weight: 700; }
+  .phone { font-weight: 700; color: var(--primary); }
+
+  /* 공통 */
+  section { padding: 100px 48px; }
+  .container { max-width: 1100px; margin: 0 auto; }
+  .container-wide { max-width: 1300px; margin: 0 auto; }
+  .section-label {
+    display: inline-block;
+    color: var(--accent);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin-bottom: 16px;
+    text-transform: uppercase;
+  }
+  h1 { font-size: 56px; line-height: 1.25; margin-bottom: 24px; font-weight: 800; }
+  h2 { font-size: 40px; line-height: 1.3; margin-bottom: 20px; font-weight: 700; }
+  h3 { font-size: 22px; margin-bottom: 10px; font-weight: 700; }
+  .sub { font-size: 18px; color: var(--text-light); }
+
+  /* 1. 페이지 히어로 */
+  .hero {
+    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+    color: white;
+    padding: 140px 48px 120px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -10%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(212,165,116,0.15), transparent 70%);
+    border-radius: 50%;
+  }
+  .hero .badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.25);
+    padding: 8px 16px;
+    border-radius: 24px;
+    font-size: 13px;
+    margin-bottom: 24px;
+    letter-spacing: 0.5px;
+  }
+  .hero h1 { color: white; }
+  .hero h1 strong { color: var(--accent); }
+  .hero .sub-large {
+    font-size: 20px;
+    color: rgba(255,255,255,0.85);
+    max-width: 700px;
+    margin: 0 auto 40px;
+  }
+  .hero-stats {
+    display: flex;
+    justify-content: center;
+    gap: 60px;
+    margin-top: 60px;
+    flex-wrap: wrap;
+  }
+  .hero-stat { text-align: center; }
+  .hero-stat .num {
+    font-size: 42px;
+    font-weight: 800;
+    color: var(--accent);
+    display: block;
+    line-height: 1;
+  }
+  .hero-stat .lbl {
+    font-size: 13px;
+    color: rgba(255,255,255,0.7);
+    margin-top: 8px;
+    letter-spacing: 0.5px;
+  }
+
+  /* 2. 우리는 누구 */
+  .intro {
+    text-align: center;
+    background: white;
+  }
+  .intro .container { max-width: 800px; }
+  .intro p {
+    font-size: 18px;
+    color: var(--text);
+    line-height: 1.9;
+    margin-bottom: 16px;
+  }
+  .intro p.lead {
+    font-size: 24px;
+    color: var(--primary);
+    font-weight: 600;
+    line-height: 1.5;
+    margin-bottom: 32px;
+  }
+  .parent-brand {
+    display: inline-block;
+    background: var(--bg-dark);
+    padding: 8px 20px;
+    border-radius: 24px;
+    font-size: 14px;
+    color: var(--text-light);
+    margin-top: 24px;
+  }
+  .parent-brand strong { color: var(--primary); }
+
+  /* 3. 우리가 해결하는 문제 */
+  .problems { background: var(--bg-dark); }
+  .problem-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    margin-top: 60px;
+  }
+  .problem-card {
+    background: white;
+    padding: 32px 28px;
+    border-radius: 16px;
+    border-top: 4px solid var(--primary-light);
+  }
+  .problem-icon {
+    font-size: 36px;
+    margin-bottom: 16px;
+    display: block;
+  }
+  .problem-card h3 { color: var(--primary); }
+  .problem-card p { color: var(--text-light); font-size: 14px; line-height: 1.7; }
+
+  /* 4. 우리의 기술 */
+  .tech { background: white; }
+  .tech-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 24px;
+    margin-top: 60px;
+  }
+  .tech-card {
+    text-align: center;
+    padding: 40px 24px;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .tech-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(45,93,58,0.12);
+  }
+  .tech-icon {
+    width: 64px;
+    height: 64px;
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    color: white;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    margin: 0 auto 20px;
+  }
+  .tech-card h3 { font-size: 20px; }
+  .tech-card p { font-size: 14px; color: var(--text-light); }
+
+  /* 5. 차별점 (단순 시공 vs 기술 결합) */
+  .differ { background: var(--primary-dark); color: white; }
+  .differ h2 { color: white; text-align: center; margin-bottom: 60px; }
+  .differ .section-label { color: var(--accent); }
+  .compare {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .compare-col {
+    padding: 40px;
+    border-radius: 16px;
+  }
+  .compare-col.old {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    opacity: 0.7;
+  }
+  .compare-col.new {
+    background: rgba(212,165,116,0.15);
+    border: 2px solid var(--accent);
+  }
+  .compare-col h3 {
+    font-size: 16px;
+    letter-spacing: 1px;
+    margin-bottom: 16px;
+    text-transform: uppercase;
+  }
+  .compare-col.old h3 { color: rgba(255,255,255,0.6); }
+  .compare-col.new h3 { color: var(--accent); }
+  .compare-col p {
+    font-size: 22px;
+    line-height: 1.5;
+    font-weight: 600;
+  }
+  .compare-col ul {
+    margin-top: 20px;
+    list-style: none;
+  }
+  .compare-col ul li {
+    padding: 8px 0;
+    font-size: 14px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+  .compare-col ul li::before {
+    content: '✓ ';
+    color: var(--accent);
+    margin-right: 8px;
+    font-weight: 700;
+  }
+  .compare-col.old ul li::before { content: '· '; color: rgba(255,255,255,0.4); }
+
+  /* 6. 시공 영역 */
+  .areas { background: var(--bg); }
+  .area-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    margin-top: 60px;
+  }
+  .area-card {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+  .area-img {
+    height: 160px;
+    background: linear-gradient(135deg, #d8e6d8, #a8c8a8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+  }
+  .area-body { padding: 24px; }
+  .area-body h3 { font-size: 18px; color: var(--primary); }
+  .area-body p { font-size: 13px; color: var(--text-light); line-height: 1.6; }
+  .area-card:nth-child(2) .area-img { background: linear-gradient(135deg, #e6d8d8, #c8a8a8); }
+  .area-card:nth-child(3) .area-img { background: linear-gradient(135deg, #d8e0e6, #a8b8c8); }
+  .area-card:nth-child(4) .area-img { background: linear-gradient(135deg, #e6e0d8, #c8b8a8); }
+  .area-card:nth-child(5) .area-img { background: linear-gradient(135deg, #e6d8e0, #c8a8b8); }
+
+  /* 7. 프로세스 */
+  .process { background: white; }
+  .process-steps {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 16px;
+    margin-top: 60px;
+    position: relative;
+  }
+  .process-step {
+    text-align: center;
+    position: relative;
+  }
+  .step-num {
+    width: 56px;
+    height: 56px;
+    background: var(--primary);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    font-weight: 800;
+    margin: 0 auto 20px;
+    position: relative;
+    z-index: 2;
+  }
+  .process-step:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    top: 28px;
+    left: 50%;
+    width: 100%;
+    height: 2px;
+    background: var(--border);
+    z-index: 1;
+  }
+  .process-step h3 { font-size: 16px; }
+  .process-step p { font-size: 13px; color: var(--text-light); }
+
+  /* 8. 자산 */
+  .assets {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+    color: white;
+    text-align: center;
+  }
+  .assets h2 { color: white; }
+  .assets .sub { color: rgba(255,255,255,0.8); margin-bottom: 60px; }
+  .asset-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 32px;
+  }
+  .asset-num {
+    font-size: 56px;
+    font-weight: 800;
+    color: var(--accent);
+    display: block;
+    line-height: 1;
+  }
+  .asset-lbl {
+    font-size: 14px;
+    color: rgba(255,255,255,0.85);
+    margin-top: 12px;
+    letter-spacing: 0.5px;
+  }
+
+  /* 9. CTA */
+  .cta-section {
+    background: var(--bg-dark);
+    text-align: center;
+  }
+  .cta-section h2 { color: var(--primary); }
+  .cta-section .sub { margin-bottom: 32px; }
+  .cta-btn {
+    display: inline-block;
+    background: var(--primary);
+    color: white;
+    padding: 18px 48px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 17px;
+    transition: background 0.2s;
+  }
+  .cta-btn:hover { background: var(--primary-dark); }
+  .cta-btn.secondary {
+    background: white;
+    color: var(--primary);
+    border: 2px solid var(--primary);
+    margin-left: 12px;
+  }
+
+  /* 푸터 */
+  footer {
+    background: #1a1a1a;
+    color: #999;
+    padding: 60px 48px 40px;
+    text-align: center;
+    font-size: 13px;
+  }
+  footer .logo-f {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: white;
+    margin-bottom: 16px;
+  }
+  footer .sns { margin: 20px 0; }
+  footer .sns a { color: #ccc; margin: 0 12px; text-decoration: none; }
+
+  @media (max-width: 900px) {
+    .compare { grid-template-columns: 1fr; }
+    .process-steps { grid-template-columns: 1fr 1fr; }
+    .process-step:not(:last-child)::after { display: none; }
+  }
+  @media (max-width: 768px) {
+    nav ul { display: none; }
+    h1 { font-size: 36px; }
+    h2 { font-size: 28px; }
+    .hero { padding: 100px 24px 80px; }
+    section { padding: 60px 24px; }
+    .hero-stats { gap: 32px; }
+    .hero-stat .num { font-size: 32px; }
+    .asset-num { font-size: 40px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- 상단 안내 바 -->
+<div class="preview-banner">
+  🔍 <strong>피벗 미리보기</strong> — 서비스 소개 페이지 (신규 작성)
+  <a href="preview.html">← 메인 페이지로 돌아가기</a>
+</div>
+
+<!-- 헤더 -->
+<header>
+  <a href="preview.html" class="logo">ALL RENEW</a>
+  <nav>
+    <ul>
+      <li><a href="#" class="active">리모델링 서비스</a></li>
+      <li><a href="#">시공 사례</a></li>
+      <li><a href="#">브랜드 스토리</a></li>
+      <li><a href="#">뉴스룸</a></li>
+      <li><a href="#">상담신청</a></li>
+    </ul>
+  </nav>
+  <div class="phone">📞 1551-2901</div>
+</header>
+
+<!-- 1. 페이지 히어로 -->
+<section class="hero">
+  <div class="container">
+    <span class="badge">A BRAND OF 넷폼알앤디</span>
+    <h1>기술로 다시 짓는<br><strong>공간의 경험</strong></h1>
+    <p class="sub-large">
+      AI · 소재 기술 · 모듈러 · 로봇 시공을 접목한 차세대 인테리어·리모델링 솔루션.<br>
+      단순 시공이 아닌, 기술과 제품이 결합된 새로운 기준을 제시합니다.
+    </p>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <span class="num">70+</span>
+        <span class="lbl">특허기술</span>
+      </div>
+      <div class="hero-stat">
+        <span class="num">100+</span>
+        <span class="lbl">제품군</span>
+      </div>
+      <div class="hero-stat">
+        <span class="num">270만</span>
+        <span class="lbl">세대 적용 기반</span>
+      </div>
+      <div class="hero-stat">
+        <span class="num">250+</span>
+        <span class="lbl">시공사 네트워크</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 2. 우리는 누구 -->
+<section class="intro">
+  <div class="container">
+    <span class="section-label">ABOUT OLLINEW</span>
+    <h2>인테리어와 리모델링,<br>이제는 기술로 합니다</h2>
+    <p class="lead">
+      "건축물 리모델링은 더 이상 단순한 미관 개선 공사가 아닙니다."
+    </p>
+    <p>
+      안전·소음·공기질·유지관리·공간 경험까지 함께 고려해야 하는 기술 산업으로 변화하고 있어요.
+      올리뉴는 그동안 건축물 유지보수 분야에서 축적해온 <strong>70여 가지 특허기술과 100여 가지 제품군</strong>을
+      인테리어·리모델링 영역으로 확장합니다.
+    </p>
+    <p>
+      디자인과 마감 중심으로 성장해 온 기존 인테리어 시장과 달리, 올리뉴는 실내 공간에서 발생하는
+      <strong>구조적 문제와 생활 불편까지 기술적으로 해결</strong>하는 데 초점을 맞춥니다.
+    </p>
+    <div class="parent-brand">
+      🏢 올리뉴는 건축물 리노베이션 테크 기업 <strong>넷폼알앤디</strong>의 인테리어·리모델링 브랜드입니다
+    </div>
+  </div>
+</section>
+
+<!-- 3. 우리가 해결하는 문제 -->
+<section class="problems">
+  <div class="container">
+    <span class="section-label">PROBLEMS WE SOLVE</span>
+    <h2>실내 공간의 문제,<br>이제 기술로 해결합니다</h2>
+    <p class="sub">대표적인 적용 분야 6가지</p>
+    <div class="problem-grid">
+      <div class="problem-card">
+        <span class="problem-icon">🔇</span>
+        <h3>층간소음 저감</h3>
+        <p>자체 소재 기술과 특화 공법으로 일상의 소음 스트레스를 줄여드립니다</p>
+      </div>
+      <div class="problem-card">
+        <span class="problem-icon">🛡️</span>
+        <h3>실내 안전성 향상</h3>
+        <p>일상에서 마주하는 안전 사각지대를 기술로 해결하는 리모델링</p>
+      </div>
+      <div class="problem-card">
+        <span class="problem-icon">🔥</span>
+        <h3>화재 위험 저감</h3>
+        <p>화재에 강한 소재와 공법으로 가족의 안전을 한 단계 높입니다</p>
+      </div>
+      <div class="problem-card">
+        <span class="problem-icon">🌬️</span>
+        <h3>공기질 개선</h3>
+        <p>365일 머무는 실내 공기를, 매일 더 깨끗하고 쾌적하게</p>
+      </div>
+      <div class="problem-card">
+        <span class="problem-icon">🏛️</span>
+        <h3>공용공간 기능 개선</h3>
+        <p>입주민이 다시 찾고 싶은 공용공간으로 가치를 높입니다</p>
+      </div>
+      <div class="problem-card">
+        <span class="problem-icon">🏘️</span>
+        <h3>커뮤니티 시설 리모델링</h3>
+        <p>공동주택 커뮤니티 시설을 새로운 가치 자산으로 전환합니다</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4. 우리의 기술 -->
+<section class="tech">
+  <div class="container">
+    <div style="text-align:center; margin-bottom: 20px;">
+      <span class="section-label">OUR TECHNOLOGY</span>
+      <h2>차세대 리모델링을 만드는<br>4가지 핵심 기술</h2>
+      <p class="sub">올리뉴만의 기술 자산이 인테리어·리모델링에 새로운 기준을 만듭니다</p>
+    </div>
+    <div class="tech-grid">
+      <div class="tech-card">
+        <div class="tech-icon">🤖</div>
+        <h3>AI 공간 분석</h3>
+        <p>사용자 동선, 체류 시간, 시설별 활용도, 관리 편의성 데이터를 분석해 최적의 리모델링 방향을 제안합니다</p>
+      </div>
+      <div class="tech-card">
+        <div class="tech-icon">🧪</div>
+        <h3>자체 소재 기술</h3>
+        <p>방수·도장·보수 분야에서 축적한 소재 개발 역량을 인테리어·리모델링 특화 제품으로 확장합니다</p>
+      </div>
+      <div class="tech-card">
+        <div class="tech-icon">📦</div>
+        <h3>모듈러 공법</h3>
+        <p>공장에서 사전 제작한 부재·시스템을 현장에 적용해 공사 기간은 줄이고 품질 편차는 낮춥니다</p>
+      </div>
+      <div class="tech-card">
+        <div class="tech-icon">🦾</div>
+        <h3>로봇 시공</h3>
+        <p>반복 시공·정밀 시공·위험 작업 보조에 로봇 기술을 활용해 더 안전하고 정확한 시공을 만듭니다</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5. 차별점 -->
+<section class="differ">
+  <div class="container">
+    <span class="section-label" style="display:block; text-align:center;">WHAT MAKES US DIFFERENT</span>
+    <h2>"단순 시공"이 아닌,<br>기술과 제품이 결합된 솔루션</h2>
+    <div class="compare">
+      <div class="compare-col old">
+        <h3>기존 인테리어 시장</h3>
+        <p>디자인과 마감 중심</p>
+        <ul>
+          <li>현장 의존적 시공</li>
+          <li>품질 편차 발생</li>
+          <li>구조적 문제 해결 어려움</li>
+          <li>유지관리 별도</li>
+        </ul>
+      </div>
+      <div class="compare-col new">
+        <h3>올리뉴</h3>
+        <p>기술 + 제품 + 시공 통합</p>
+        <ul>
+          <li>특허기술 기반 공법</li>
+          <li>모듈러로 품질 균일화</li>
+          <li>구조·소음·공기질 기술 해결</li>
+          <li>기술 개발 → 시공 → 사후관리 통합</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 6. 시공 영역 -->
+<section class="areas">
+  <div class="container">
+    <span class="section-label">SERVICE AREAS</span>
+    <h2>다양한 공간,<br>하나의 기술 표준으로</h2>
+    <div class="area-grid">
+      <div class="area-card">
+        <div class="area-img">🏠</div>
+        <div class="area-body">
+          <h3>실내 인테리어</h3>
+          <p>층간소음·공기질·안전성까지 함께 해결하는 차세대 인테리어</p>
+        </div>
+      </div>
+      <div class="area-card">
+        <div class="area-img">🏛️</div>
+        <div class="area-body">
+          <h3>공용공간 리모델링</h3>
+          <p>로비·복도·계단실 등 일상에서 마주하는 공간의 가치 향상</p>
+        </div>
+      </div>
+      <div class="area-card">
+        <div class="area-img">🌳</div>
+        <div class="area-body">
+          <h3>커뮤니티 시설</h3>
+          <p>공동주택 커뮤니티 시설을 입주민이 다시 찾는 공간으로</p>
+        </div>
+      </div>
+      <div class="area-card">
+        <div class="area-img">🏚️</div>
+        <div class="area-body">
+          <h3>노후 건축물 리뉴얼</h3>
+          <p>오래된 공간에 기술로 새 숨을 불어넣는 종합 리뉴얼</p>
+        </div>
+      </div>
+      <div class="area-card">
+        <div class="area-img">🏬</div>
+        <div class="area-body">
+          <h3>상업공간 개선</h3>
+          <p>매장·오피스 등 상업공간에 기술 기반 솔루션 적용</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 7. 프로세스 -->
+<section class="process">
+  <div class="container">
+    <div style="text-align:center;">
+      <span class="section-label">OUR PROCESS</span>
+      <h2>처음부터 끝까지,<br>본사가 직접 책임집니다</h2>
+      <p class="sub">상담부터 사후 관리까지 5단계 통합 프로세스</p>
+    </div>
+    <div class="process-steps">
+      <div class="process-step">
+        <div class="step-num">1</div>
+        <h3>상담</h3>
+        <p>전문 매니저가 공간 상태와 니즈를 파악합니다</p>
+      </div>
+      <div class="process-step">
+        <div class="step-num">2</div>
+        <h3>진단·분석</h3>
+        <p>AI 공간 분석으로 최적 솔루션을 도출합니다</p>
+      </div>
+      <div class="process-step">
+        <div class="step-num">3</div>
+        <h3>설계·견적</h3>
+        <p>기술·제품 결합 솔루션을 투명하게 제안합니다</p>
+      </div>
+      <div class="process-step">
+        <div class="step-num">4</div>
+        <h3>시공</h3>
+        <p>모듈러·로봇 기술로 정밀하게 시공합니다</p>
+      </div>
+      <div class="process-step">
+        <div class="step-num">5</div>
+        <h3>사후 관리</h3>
+        <p>본사가 직접 책임지고 유지관리까지 연결합니다</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 8. 자산 -->
+<section class="assets">
+  <div class="container">
+    <span class="section-label">OUR ASSETS</span>
+    <h2>이미 검증된 기술 자산</h2>
+    <p class="sub">누적 적용 기반과 전국 네트워크로 어떤 현장에도 대응합니다</p>
+    <div class="asset-grid">
+      <div>
+        <span class="asset-num">70+</span>
+        <div class="asset-lbl">특허기술</div>
+      </div>
+      <div>
+        <span class="asset-num">100+</span>
+        <div class="asset-lbl">제품군</div>
+      </div>
+      <div>
+        <span class="asset-num">270만</span>
+        <div class="asset-lbl">누적 세대 적용</div>
+      </div>
+      <div>
+        <span class="asset-num">250+</span>
+        <div class="asset-lbl">전국 시공사 네트워크</div>
+      </div>
+      <div>
+        <span class="asset-num">25년</span>
+        <div class="asset-lbl">종합건설업 결합 추진</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 9. CTA -->
+<section class="cta-section">
+  <div class="container">
+    <span class="section-label">START YOUR REMODELING</span>
+    <h2>공간의 가치를 다시 짓고 싶다면</h2>
+    <p class="sub">전문 매니저가 친절하게 상담해 드립니다. 부담 없이 문의해 주세요.</p>
+    <a href="preview.html#contact" class="cta-btn">상담 신청하기</a>
+    <a href="preview.html" class="cta-btn secondary">메인으로 돌아가기</a>
+  </div>
+</section>
+
+<!-- 푸터 -->
+<footer>
+  <div class="logo-f">ALL RENEW</div>
+  <div>넷폼알앤디의 인테리어·리모델링 브랜드</div>
+  <div class="sns">
+    <a href="#">네이버 블로그</a> ·
+    <a href="#">YouTube</a> ·
+    <a href="#">Instagram</a>
+  </div>
+  <div style="margin-top:20px; font-size:12px;">📞 1551-2901</div>
+  <div style="margin-top:24px; font-size:11px; opacity:0.6;">
+    Copyright ⓒ 2026 올리뉴 All rights reserved
+  </div>
+</footer>
+
+</body>
+</html>

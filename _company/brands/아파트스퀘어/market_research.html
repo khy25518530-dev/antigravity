@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>아파트스퀘어 — 한국 아파트 유지보수 감리 시장조사 리포트</title>
+<style>
+  @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css');
+
+  :root {
+    --bg: #fafaf9;
+    --surface: #ffffff;
+    --ink: #1a1a1a;
+    --ink-soft: #3d3d3d;
+    --muted: #6b6b6b;
+    --line: #e5e5e5;
+    --line-strong: #cfcfcf;
+    --brand: #1e3a5f;
+    --brand-soft: #eaf1f8;
+    --accent: #c9a55c;
+    --warn-bg: #fdf6e3;
+    --warn-bd: #e8d68a;
+    --tip-bg: #eef6f0;
+    --tip-bd: #b7d5c0;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    margin: 0;
+    padding: 0;
+    line-height: 1.75;
+    font-size: 15px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .container {
+    max-width: 920px;
+    margin: 0 auto;
+    background: var(--surface);
+    padding: 64px 72px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  }
+
+  /* Header */
+  .doc-header {
+    border-bottom: 3px solid var(--brand);
+    padding-bottom: 28px;
+    margin-bottom: 48px;
+  }
+  .doc-tag {
+    display: inline-block;
+    background: var(--brand);
+    color: white;
+    padding: 4px 12px;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .doc-header h1 {
+    font-size: 30px;
+    font-weight: 800;
+    margin: 0 0 12px 0;
+    color: var(--ink);
+    line-height: 1.3;
+    letter-spacing: -0.5px;
+  }
+  .doc-meta {
+    display: flex;
+    gap: 24px;
+    color: var(--muted);
+    font-size: 13px;
+    margin-top: 12px;
+  }
+  .doc-meta span { display: flex; align-items: center; gap: 6px; }
+  .doc-meta strong { color: var(--ink-soft); font-weight: 600; }
+
+  /* Notice */
+  .notice {
+    background: var(--warn-bg);
+    border-left: 3px solid var(--warn-bd);
+    padding: 14px 18px;
+    margin: 24px 0 40px 0;
+    font-size: 13px;
+    color: var(--ink-soft);
+    border-radius: 0 4px 4px 0;
+  }
+  .notice strong { color: var(--ink); }
+
+  /* TOC */
+  .toc {
+    background: #f5f5f3;
+    padding: 24px 28px;
+    margin: 32px 0 48px 0;
+    border-radius: 4px;
+  }
+  .toc-title {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--muted);
+    letter-spacing: 1.5px;
+    margin-bottom: 14px;
+  }
+  .toc ol {
+    margin: 0;
+    padding-left: 0;
+    list-style: none;
+    columns: 2;
+    column-gap: 32px;
+  }
+  .toc li {
+    padding: 4px 0;
+    font-size: 13.5px;
+    break-inside: avoid;
+  }
+  .toc a {
+    color: var(--ink-soft);
+    text-decoration: none;
+    display: flex;
+    gap: 8px;
+  }
+  .toc a:hover { color: var(--brand); }
+  .toc .num {
+    color: var(--accent);
+    font-weight: 700;
+    min-width: 22px;
+  }
+
+  /* Sections */
+  h2 {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--brand);
+    margin: 56px 0 24px 0;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--line);
+    letter-spacing: -0.3px;
+  }
+  h2 .h2-num {
+    display: inline-block;
+    background: var(--brand);
+    color: white;
+    font-size: 13px;
+    padding: 2px 10px;
+    margin-right: 12px;
+    border-radius: 3px;
+    font-weight: 700;
+    vertical-align: middle;
+  }
+
+  h3 {
+    font-size: 16.5px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 32px 0 14px 0;
+    letter-spacing: -0.2px;
+  }
+
+  p { margin: 12px 0; }
+
+  /* Tables */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 18px 0 24px 0;
+    font-size: 13.5px;
+    background: var(--surface);
+  }
+  th {
+    background: var(--brand-soft);
+    color: var(--brand);
+    padding: 12px 14px;
+    text-align: left;
+    font-weight: 700;
+    border: 1px solid var(--line-strong);
+    font-size: 12.5px;
+    letter-spacing: -0.1px;
+  }
+  td {
+    padding: 12px 14px;
+    border: 1px solid var(--line);
+    vertical-align: top;
+    color: var(--ink-soft);
+  }
+  tr:nth-child(even) td { background: #fafafa; }
+
+  /* Links */
+  a {
+    color: var(--brand);
+    text-decoration: underline;
+    text-decoration-color: rgba(30, 58, 95, 0.3);
+    text-underline-offset: 2px;
+  }
+  a:hover {
+    text-decoration-color: var(--brand);
+  }
+
+  /* Strong */
+  strong { color: var(--ink); font-weight: 700; }
+
+  /* Lists */
+  ul, ol { padding-left: 22px; }
+  li { margin: 6px 0; color: var(--ink-soft); }
+
+  /* Insight callout */
+  .insight {
+    background: var(--tip-bg);
+    border-left: 4px solid var(--tip-bd);
+    padding: 14px 18px;
+    margin: 20px 0 32px 0;
+    font-size: 13.5px;
+    border-radius: 0 4px 4px 0;
+  }
+  .insight strong { color: #2d5740; }
+  .insight::before {
+    content: "한 줄 시사점 — ";
+    font-weight: 700;
+    color: #2d5740;
+  }
+
+  /* Code-like flow diagram */
+  .flow {
+    background: #1e1e1e;
+    color: #e0e0e0;
+    padding: 20px 24px;
+    border-radius: 4px;
+    font-family: 'JetBrains Mono', 'D2Coding', Menlo, monospace;
+    font-size: 13px;
+    line-height: 1.9;
+    margin: 20px 0;
+    white-space: pre;
+    overflow-x: auto;
+  }
+
+  /* Source link inline */
+  .src {
+    color: var(--muted);
+    font-size: 12.5px;
+  }
+
+  /* TL;DR box */
+  .tldr {
+    background: linear-gradient(135deg, #1e3a5f 0%, #2c5282 100%);
+    color: white;
+    padding: 32px 36px;
+    margin: 48px 0;
+    border-radius: 6px;
+  }
+  .tldr h2 {
+    color: white;
+    border: none;
+    margin: 0 0 20px 0;
+    font-size: 22px;
+  }
+  .tldr .h2-num {
+    background: white;
+    color: var(--brand);
+  }
+  .tldr ol {
+    padding-left: 22px;
+  }
+  .tldr li {
+    color: rgba(255,255,255,0.92);
+    margin: 10px 0;
+    font-size: 14.5px;
+  }
+  .tldr strong { color: var(--accent); }
+
+  /* Limitations footer */
+  .limits {
+    background: #f5f5f3;
+    padding: 24px 28px;
+    margin-top: 56px;
+    border-radius: 4px;
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+  .limits .label {
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    font-weight: 700;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+
+  /* Hypothesis cards (H1..H5) */
+  .hyp-table th:nth-child(1) { width: 8%; }
+  .hyp-table th:nth-child(2) { width: 30%; }
+  .hyp-table th:nth-child(3) { width: 40%; }
+  .hyp-table th:nth-child(4) { width: 22%; }
+  .hyp-id {
+    display: inline-block;
+    background: var(--accent);
+    color: white;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-size: 12px;
+  }
+
+  /* Print */
+  @media print {
+    body { background: white; font-size: 11pt; }
+    .container { box-shadow: none; padding: 0; max-width: none; }
+    h2 { page-break-after: avoid; }
+    table, .insight, .tldr, .flow { page-break-inside: avoid; }
+    .toc { page-break-after: always; }
+    a { color: var(--ink); text-decoration: none; }
+    .src { display: inline; }
+  }
+
+  /* Mobile */
+  @media (max-width: 768px) {
+    .container { padding: 32px 20px; }
+    .doc-header h1 { font-size: 22px; }
+    h2 { font-size: 18px; }
+    .toc ol { columns: 1; }
+    .doc-meta { flex-direction: column; gap: 6px; }
+    table { font-size: 12px; }
+    th, td { padding: 8px 10px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <header class="doc-header">
+    <div class="doc-tag">Market Research Report</div>
+    <h1>한국 아파트 유지보수 감리 시장조사 리포트</h1>
+    <div class="doc-meta">
+      <span><strong>작성일</strong> 2026-05-19</span>
+      <span><strong>클라이언트</strong> 아파트스퀘어</span>
+      <span><strong>타겟</strong> 아파트 관리소장 (B2B 의사결정자)</span>
+    </div>
+  </header>
+
+  <div class="notice">
+    <strong>출처 표기 원칙</strong> &nbsp;— 본문 내 핵심 수치·법령은 [출처: URL] 형태로 각주처럼 표기. 출처 없는 수치는 "추정" 표시. 모르는 영역은 "조사 한계" 명시.
+  </div>
+
+  <nav class="toc">
+    <div class="toc-title">목차 / Table of Contents</div>
+    <ol>
+      <li><a href="#s1"><span class="num">01</span>시장 정의·구조</a></li>
+      <li><a href="#s2"><span class="num">02</span>시장 규모</a></li>
+      <li><a href="#s3"><span class="num">03</span>의사결정 흐름</a></li>
+      <li><a href="#s4"><span class="num">04</span>가격 구조</a></li>
+      <li><a href="#s5"><span class="num">05</span>경쟁사 매핑</a></li>
+      <li><a href="#s6"><span class="num">06</span>디지털 마케팅 현황</a></li>
+      <li><a href="#s7"><span class="num">07</span>관리소장 페르소나</a></li>
+      <li><a href="#s8"><span class="num">08</span>법·정책 트렌드</a></li>
+      <li><a href="#s9"><span class="num">09</span>기회·위협</a></li>
+      <li><a href="#s10"><span class="num">10</span>검증할 가설 5가지</a></li>
+      <li><a href="#tldr"><span class="num">★</span>종합 시사점 (TL;DR)</a></li>
+    </ol>
+  </nav>
+
+  <!-- ============== 1 ============== -->
+  <section id="s1">
+    <h2><span class="h2-num">01</span>시장 정의·구조</h2>
+
+    <h3>1-1. "감리"의 종류 — 신축 감리 vs 유지보수 감리는 다른 시장이다</h3>
+
+    <table>
+      <thead>
+        <tr>
+          <th>구분</th>
+          <th>근거 법령</th>
+          <th>대상</th>
+          <th>의무 여부</th>
+          <th>수행 주체</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>건축감리(신축)</strong></td>
+          <td>건축법 제25조, 주택법</td>
+          <td>신축 공동주택</td>
+          <td>의무 (인허가 요건)</td>
+          <td>건축사사무소, 감리전문회사</td>
+        </tr>
+        <tr>
+          <td><strong>책임감리/CM</strong></td>
+          <td>건설기술진흥법 제39조의2</td>
+          <td>공공발주 대형 공사</td>
+          <td>의무</td>
+          <td>건설엔지니어링사업자</td>
+        </tr>
+        <tr>
+          <td><strong>유지보수/리모델링 감리<br>(아파트스퀘어 영역)</strong></td>
+          <td>명시적 법률 부재 — 공동주택관리법 시행령 등 간접 근거</td>
+          <td>입주 후 공용부분 공사</td>
+          <td><strong>원칙적 임의</strong></td>
+          <td>건축사사무소, 엔지니어링, 1인 감리사</td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="src">출처: <a href="https://04noti.com/%EA%B1%B4%EC%84%A4%EC%82%AC%EC%97%85%EA%B4%80%EB%A6%AC%EC%99%80-%EA%B3%B5%EC%82%AC%EA%B0%90%EB%A6%AC_%EB%B9%84%EA%B5%90/">건설사업관리와 공사감리 차이</a>, <a href="https://casenote.kr/%EB%B2%95%EB%A0%B9/%EA%B1%B4%EC%B6%95%EB%B2%95/%EC%A0%9C25%EC%A1%B0">건축법 제25조</a></p>
+
+    <h3>1-2. 유지보수 감리의 법적 근거 — "의무 아님, 그러나 권장·인정"</h3>
+    <p>핵심 사실: <strong>국토교통부 주택건설공급과 질의회신(2018.11.26)</strong>에 따르면, 공용부분 공사에 수반되는 감리용역비는 장기수선계획에 반영하여 <strong>장기수선충당금에서 집행 가능</strong>하다. 즉 돈은 합법적으로 흘러갈 수 있으나, <strong>감리 선임은 단지의 자율적 판단</strong>이다. <span class="src">[출처: <a href="http://www.aptn.co.kr/news/articleView.html?idxno=65022">아파트관리신문, 공사 감리용역비 장충금 집행</a>]</span></p>
+
+    <ul>
+      <li>건축법 제25조의 "공사감리"는 <strong>신축·증축·대수선</strong> 등 건축허가/신고 대상 공사에 적용. 일반 유지보수(외벽도장, 방수, 승강기 교체 등)는 대수선에 해당하지 않으면 의무 대상이 아니다.</li>
+      <li>공동주택관리법은 입주자대표회의·관리주체에게 "공사의 관리·감독 의무"를 부과하지만, <strong>외부 감리 선임을 명시적으로 강제하지는 않는다.</strong></li>
+      <li>단, <strong>승강기 교체</strong>는 승강기안전관리법상 검사 제도가 있고, <strong>외벽도장·옥상방수</strong>는 안전관리 측면에서 감리 권장이 업계 통설.</li>
+    </ul>
+
+    <h3>1-3. 공사 유형별 감리 의무성 매트릭스</h3>
+    <table>
+      <thead><tr><th>공사 유형</th><th>법적 의무</th><th>실무상 감리 비중</th><th>비고</th></tr></thead>
+      <tbody>
+        <tr><td>외벽도장(재도장)</td><td>임의</td><td>중 (대단지일수록 높음)</td><td>색채심의 별도</td></tr>
+        <tr><td>옥상·지하 방수</td><td>임의</td><td>중~상</td><td>하자 직결로 보수적</td></tr>
+        <tr><td>승강기 교체</td><td>일부 (안전검사)</td><td>상</td><td>보고 사례 다수</td></tr>
+        <tr><td>배관(급수·난방) 교체</td><td>임의</td><td>중</td><td>단수 리스크 큼</td></tr>
+        <tr><td>어린이놀이시설</td><td>안전관리법상 검사 의무</td><td>—</td><td>감리와는 별개</td></tr>
+        <tr><td>대수선·리모델링</td><td><strong>건축법상 감리 의무</strong></td><td>의무</td><td>신축감리 영역</td></tr>
+      </tbody>
+    </table>
+
+    <div class="insight">유지보수 감리는 <strong>법적 의무 시장이 아닌 "리스크 회피 수요 시장"</strong>. 따라서 마케팅 메시지는 "법 때문에"가 아니라 "분쟁·하자·문책을 피하기 위해"여야 한다.</div>
+  </section>
+
+  <!-- ============== 2 ============== -->
+  <section id="s2">
+    <h2><span class="h2-num">02</span>시장 규모</h2>
+
+    <h3>2-1. 전체 시장 사이즈 (2024년 기준)</h3>
+    <table>
+      <thead><tr><th>지표</th><th>수치</th><th>출처</th></tr></thead>
+      <tbody>
+        <tr><td>의무관리대상 공동주택 단지 수</td><td><strong>20,805개 단지 / 1,188만 세대</strong></td><td><a href="https://www.hapt.co.kr/news/articleView.html?idxno=166153">한국아파트신문</a></td></tr>
+        <tr><td>공동주택 관리비 시장 규모</td><td><strong>30.6조 원</strong> (연 11% 성장)</td><td>동일</td></tr>
+        <tr><td>위탁관리회사 수</td><td>약 <strong>672개</strong> (대다수 영세)</td><td><a href="http://www.aptn.co.kr/news/articleView.html?idxno=78164">아파트관리신문</a></td></tr>
+        <tr><td>의무관리단지 전환 기준</td><td>300세대↑ / 150세대↑(승강기·중앙난방·주상복합)</td><td><a href="https://lbox.kr/v2/statute/%EA%B3%B5%EB%8F%99%EC%A3%BC%ED%83%9D%EA%B4%80%EB%A6%AC%EB%B2%95">공동주택관리법 제10조의2</a></td></tr>
+      </tbody>
+    </table>
+
+    <h3>2-2. 장기수선충당금(장충금) — "감리비 결제의 진짜 지갑"</h3>
+    <ul>
+      <li>2021년 6월 전국 평균 적립단가는 <strong>㎡당 203원</strong>. <span class="src">[출처: <a href="https://www.k-apt.go.kr/apiinfo/index/aptMarketSize.do?tabId=tabAvg3">K-apt 통계</a>]</span></li>
+      <li>2024년 일부 단지에서 장충금이 <strong>2배 인상</strong>되는 사례 보도 — 노후 단지·재도장·승강기 교체 수요 누적 때문. <span class="src">[<a href="https://www.newsis.com/view/NISX20240329_0002680479">뉴시스 2024.03</a>]</span></li>
+      <li><strong>추정 계산</strong>: 1,188만 세대 × 평균 75㎡ × 203원 × 12개월 ≈ <strong>연 2.17조 원 적립</strong> (2021 단가 기준). 2024 기준 <strong>2.5~3조 원대 추정</strong>.</li>
+    </ul>
+
+    <h3>2-3. 아파트 유지보수공사 시장 규모</h3>
+    <ul>
+      <li>K-apt가 유지보수공사용역 시장규모를 별도 집계 중이나, 본 조사에서 절대값 확인 실패. <strong>조사 한계</strong>: K-apt 통계 화면에서 직접 조회 필요.</li>
+      <li>국내 주거관리 시장 약 <strong>8조 원</strong> 보도 사례 존재. <span class="src">[<a href="https://www.sedaily.com/NewsView/2DAG62EBNP">서울경제</a>]</span> — 위탁수수료 중심 시장으로 보이며, 유지보수공사 자체는 별도.</li>
+    </ul>
+
+    <h3>2-4. 감리 시장 자체의 규모 (추정)</h3>
+    <ul>
+      <li>장충금 연 집행액 약 2조 원대 + 일반 수선유지비 일부 = <strong>유지보수공사 발주 ≈ 연 3~4조 원대 추정</strong>.</li>
+      <li>감리비가 공사비의 <strong>3~7%</strong> 수준이라면, <strong>유지보수 감리 시장 ≈ 연 900억~2,800억 원 추정</strong>.</li>
+      <li><strong>조사 한계</strong>: 감리 선임률(전체 공사 중 감리를 선임하는 비율)에 대한 공식 통계 부재. 업계 체감 — 대단지·고가 공사 위주 30~50%, 소규모 단지 10% 미만.</li>
+    </ul>
+
+    <div class="insight">시장의 절대 크기는 작지 않으나(연 1,000억~3,000억 추정), <strong>TAM의 핵심 변수는 "감리 선임률 자체"</strong> — 시장을 키우는 게임이다.</div>
+  </section>
+
+  <!-- ============== 3 ============== -->
+  <section id="s3">
+    <h2><span class="h2-num">03</span>의사결정 흐름</h2>
+
+    <h3>3-1. 의사결정 라인</h3>
+    <div class="flow">입주자대표회의(입대의, 최종 의결)
+   ↑↓ 안건 상정·집행
+관리주체(관리소장) — 실무 주도, 자료·견적 수집
+   ↑↓ 위·수탁
+위탁관리회사(우리관리 등) — 본사 기술지원, 입찰 절차 대행
+   ↓
+사업자 선정(공개경쟁입찰/수의계약) → 감리사·시공사 각각 선정
+   ↓
+장기수선충당금에서 결제</div>
+
+    <h3>3-2. 누가 감리사 선임을 결정하는가</h3>
+    <ul>
+      <li><strong>공식적으로는 입대의가 의결</strong>, 실무 안건 상정·견적 수집은 <strong>관리소장</strong>이 주도.</li>
+      <li>「주택관리업자 및 사업자 선정지침」(국토부 고시)에 따라 <strong>300만원 초과 사업자 선정은 경쟁입찰 원칙</strong>. K-apt에 입찰공고·결과를 공개해야 한다. <span class="src">[<a href="https://www.law.go.kr/LSW//admRulInfoP.do?admRulSeq=2100000207797&chrClsCd=010201">국가법령정보센터</a>]</span></li>
+      <li>위탁관리회사 역할: 표준 양식·기술자문 제공, 우수 협력사 풀 관리. <strong>우리관리는 1,308개 단지 약 98만 세대 위탁관리</strong>. 상위 10개사가 전체 단지의 약 <strong>37% 점유</strong>. <span class="src">[<a href="https://www.hapt.co.kr/news/articleView.html?idxno=155083">한국아파트신문</a>, <a href="https://dealsite.co.kr/articles/67297">딜사이트</a>]</span></li>
+    </ul>
+
+    <h3>3-3. 입찰 vs 수의계약</h3>
+    <p>K-apt는 입찰결과와 수의계약 결과를 별도 공개. <span class="src">[<a href="https://www.k-apt.go.kr/bid/bidList.do?type=3">K-apt 사업자 선정</a>]</span> 정확한 비율 통계는 본 조사에서 미확보(<strong>조사 한계</strong>). 업계 통설: <strong>장충금 사용 공사는 입찰 우위, 일상수선·소액 공사는 수의계약 비중 높음</strong>.</p>
+
+    <h3>3-4. 감리비 결제 경로</h3>
+    <ul>
+      <li><strong>장기수선계획에 반영 → 장기수선충당금에서 직접 집행</strong> 가능. <span class="src">[<a href="http://www.aptn.co.kr/news/articleView.html?idxno=65022">아파트관리신문</a>]</span></li>
+      <li>또는 공사비에 포함시키는 방식도 가능하나, <strong>장충금에서 별도 집행하는 것이 입찰 분리·견제 측면에서 권장</strong>.</li>
+    </ul>
+
+    <div class="insight"><strong>B2B 의사결정자는 입대의지만, 입대의에 닿는 길은 100% 관리소장을 통한다</strong>. 관리소장 설득용 자료(시방서·견적표·리스크 시나리오)가 영업의 핵심.</div>
+  </section>
+
+  <!-- ============== 4 ============== -->
+  <section id="s4">
+    <h2><span class="h2-num">04</span>가격 구조</h2>
+
+    <h3>4-1. 감리비 산정 방식</h3>
+    <p>원칙적으로 자율계약. 업계 관행은 <strong>공사비 대비 정률(%) 방식</strong> 또는 <strong>정액 방식</strong> 혼용. 공공발주 시 적용되는 「공공발주사업에 대한 건축사의 업무범위와 대가기준」이 참고지표. <span class="src">[<a href="https://www.kira.or.kr/calculate/daega_gonggong.asp">건축사협회 대가산정</a>]</span></p>
+
+    <h3>4-2. 공사 유형별 감리비 시세 (업계 인용·추정)</h3>
+    <table>
+      <thead><tr><th>공사 유형</th><th>공사비 규모</th><th>감리비 시세</th><th>출처/비고</th></tr></thead>
+      <tbody>
+        <tr><td>외벽도장</td><td>수억~수십억</td><td>공사비의 3~7%</td><td>업계 통설(<strong>추정</strong>)</td></tr>
+        <tr><td>옥상·지하 방수</td><td>단지 전체 수억</td><td>공사비의 3~7%</td><td><a href="https://soomgo.com/prices/%EC%98%A5%EC%83%81%EA%B3%B5%EC%82%AC-%EB%B0%A9%EC%88%98">숨고</a> (추정)</td></tr>
+        <tr><td>승강기 교체</td><td>1대 5,000만~8,000만</td><td><strong>5~10%</strong>, 1대당 100~200만(과거)→ 절반 이하 덤핑</td><td><a href="http://www.aptn.co.kr/news/articleView.html?idxno=110600">아파트관리신문</a></td></tr>
+        <tr><td>배관 교체</td><td>단지 규모 의존</td><td>공사비의 3~5%</td><td>추정</td></tr>
+        <tr><td>장기수선계획 컨설팅</td><td>—</td><td><strong>수백만~1천만 원대 추정</strong></td><td><a href="http://planapt.co.kr/">장기수선기술원</a>, <a href="http://www.anbit.co.kr/m4_020.jsp">안빛</a></td></tr>
+        <tr><td>하자 감정 보고서</td><td>—</td><td>법원감정 수백만~수천만</td><td><a href="https://xn--989a00af8jnslv3dba.com/%EA%B0%90%EC%A0%95%ED%8F%89%EA%B0%80%EC%88%98%EC%88%98%EB%A3%8C">부동산계산기</a></td></tr>
+      </tbody>
+    </table>
+    <p class="src"><strong>조사 한계</strong>: 유지보수 감리비 단가표가 공식 공시되지 않음. K-apt 입찰결과 화면에서 실제 낙찰액을 단지별로 직접 수집해야 정확도 확보 가능.</p>
+
+    <h3>4-3. 가격의 핵심 이슈 — 덤핑</h3>
+    <p>승강기 감리는 <strong>5년 전 1대당 100~200만 원에서 절반 이하로 덤핑</strong>이 진행 중. <span class="src">[<a href="http://www.aptn.co.kr/news/articleView.html?idxno=110600">아파트관리신문</a>]</span> 이는 다른 유지보수 감리 분야에서도 동일하게 발생 중인 구조적 현상으로 추정.</p>
+
+    <div class="insight">단순 가격 경쟁은 패배가 예고된 게임. 아파트스퀘어는 <strong>"브랜드 + 표준화된 보고서 + 분쟁 대응 패키지"로 정률 단가 방어</strong>가 필수.</div>
+  </section>
+
+  <!-- ============== 5 ============== -->
+  <section id="s5">
+    <h2><span class="h2-num">05</span>경쟁사 매핑</h2>
+
+    <h3>5-1. 그룹별 매핑</h3>
+    <table>
+      <thead><tr><th>그룹</th><th>대표 회사</th><th>유지보수 진입</th><th>강점/약점</th></tr></thead>
+      <tbody>
+        <tr><td><strong>대형 CM/감리</strong></td><td>한미글로벌, 무영CM, 한솔EME, 행림CM</td><td>일부, 본업은 신축·재건축</td><td>브랜드·자본 강 / 소단지 비효율</td></tr>
+        <tr><td><strong>중견 엔지니어링</strong></td><td>이지스엔터프라이즈, 케이디엔지니어링</td><td>일부</td><td>영업망·기술자 보유</td></tr>
+        <tr><td><strong>유지보수·장기수선 전문</strong></td><td>장기수선기술원(planapt), 안빛, 싸이아파트</td><td><strong>이 영역이 메인</strong></td><td>장기수선계획서가 주, 감리는 부가</td></tr>
+        <tr><td><strong>소형/1인 감리</strong></td><td>지역 건축사사무소 다수</td><td>가장 큰 분포</td><td>단가 낮음, 품질 편차 큼</td></tr>
+      </tbody>
+    </table>
+
+    <h3>5-2. 주요 플레이어 단신</h3>
+    <ul>
+      <li><strong>한미글로벌</strong>: 2024년 매출 4,248억(연결), 영업이익 410억(YoY +13.9%), 건축설계·CM 매출 1위. <span class="src">[<a href="https://consline.co.kr/524257">컨스라인</a>, <a href="https://www.thebell.co.kr/free/content/ArticleView.asp?key=202408231548573240106832">더벨</a>]</span> 유지보수 감리는 포트폴리오의 일부.</li>
+      <li><strong>무영CM</strong>: 재건축·리모델링 CM 강자. 잠실주공5단지 등 대형 정비사업 수주. <span class="src">[<a href="https://www.ikld.kr/news/articleView.html?idxno=293738">국토일보</a>]</span></li>
+      <li><strong>장기수선기술원(planapt.co.kr)</strong>: 표준 장기수선계획서 작성 전문.</li>
+      <li><strong>이지스엔터프라이즈(aegisep.com)</strong>: 장기수선계획 시스템·점검관리.</li>
+      <li><strong>인테리어 감리 SID(sidsid.net)</strong>: B2C 인테리어 감리 전문, B2B 단지 시장과 결이 다름.</li>
+    </ul>
+    <p class="src"><strong>조사 한계</strong>: 실제 "아파트 유지보수 감리 전문" 간판을 단 중견 5~10개사 실명 풀 미확보. K-apt 입찰결과 데이터 1년치 크롤링으로 실효 경쟁사 명단 확보 가능.</p>
+
+    <h3>5-3. 아파트스퀘어의 포지셔닝 후보</h3>
+    <ul>
+      <li><strong>빈자리 후보 1</strong>: 중견·전문 — "유지보수만 한다, 보고서·디지털 결과물이 다르다."</li>
+      <li><strong>빈자리 후보 2</strong>: 위탁관리회사(우리관리 등)와 협력하는 <strong>B2B2B 채널 파트너</strong>.</li>
+      <li><strong>빈자리 후보 3</strong>: 분쟁/하자 감정 + 사전 감리 <strong>결합 서비스</strong>.</li>
+    </ul>
+
+    <div class="insight">대형 CM은 신축이 본업이라 유지보수에 진지하지 않다 — <strong>"유지보수만 잘하는 전문 브랜드"라는 카테고리 자체가 비어 있다</strong>.</div>
+  </section>
+
+  <!-- ============== 6 ============== -->
+  <section id="s6">
+    <h2><span class="h2-num">06</span>디지털 마케팅 현황</h2>
+
+    <h3>6-1. 주요 채널 인벤토리</h3>
+    <table>
+      <thead><tr><th>채널</th><th>운영 주체</th><th>영향력</th><th>링크</th></tr></thead>
+      <tbody>
+        <tr><td>한국아파트신문</td><td>업계 1위 전문지</td><td>관리소장 필독</td><td><a href="https://www.hapt.co.kr/">hapt.co.kr</a></td></tr>
+        <tr><td>아파트관리신문</td><td>핵심 전문지</td><td>동일</td><td><a href="http://www.aptn.co.kr/">aptn.co.kr</a></td></tr>
+        <tr><td>전국아파트신문</td><td>보조 매체</td><td>중간</td><td><a href="http://www.jkapt.com/">jkapt.com</a></td></tr>
+        <tr><td>한국집합건물신문</td><td>분쟁·법률 중심</td><td>중간</td><td><a href="http://www.kabnews.kr/">kabnews.kr</a></td></tr>
+        <tr><td>중앙공동주택관리지원센터</td><td>국토부 산하</td><td>공식 채널</td><td><a href="https://myapt.molit.go.kr/">myapt.molit.go.kr</a></td></tr>
+        <tr><td>대한주택관리사협회</td><td>협회</td><td>시·도지부별 활성</td><td><a href="https://www.khma.org/">khma.org</a></td></tr>
+        <tr><td>APT너스</td><td>실무 Q&amp;A 커뮤니티</td><td>관리소장 활발 이용</td><td><a href="https://aptners.com/">aptners.com</a></td></tr>
+        <tr><td>K-apt</td><td>정부 공식 시스템</td><td>입찰·통계 허브</td><td><a href="https://www.k-apt.go.kr/">k-apt.go.kr</a></td></tr>
+      </tbody>
+    </table>
+
+    <h3>6-2. 광고비·트래픽</h3>
+    <ul>
+      <li><strong>조사 한계</strong>: 한국아파트신문·아파트관리신문의 공식 광고단가표는 미확보. 영업팀 직접 문의 필요.</li>
+      <li>네이버 카페 기반 "관리소장 전용 커뮤니티"는 실명 확정 어려움. <strong>APT너스(aptners.com)</strong>가 사실상 가장 활발한 공개 Q&amp;A 플랫폼으로 관찰됨.</li>
+      <li>키워드 검색 가설: "장기수선계획", "장기수선충당금", "외벽도장 입찰", "승강기 교체 감리" 등이 의사결정 직전 검색어로 추정.</li>
+    </ul>
+
+    <div class="insight">관리소장 도달 경로는 <strong>(1) 업계지 → (2) 협회 시·도지부 → (3) APT너스/카카오톡방</strong> 3단계. 디지털 광고보다 <strong>업계지 기고+협회 강연+커뮤니티 답변</strong>이 ROI 우위 가능성.</div>
+  </section>
+
+  <!-- ============== 7 ============== -->
+  <section id="s7">
+    <h2><span class="h2-num">07</span>관리소장 페르소나 검증</h2>
+
+    <h3>7-1. 인구통계</h3>
+    <table>
+      <thead><tr><th>항목</th><th>데이터</th><th>출처</th></tr></thead>
+      <tbody>
+        <tr><td>자격</td><td>주택관리사(보)/주택관리사</td><td><a href="https://www.q-net.or.kr/site/housing">Q-Net</a></td></tr>
+        <tr><td>연령</td><td><strong>50대 47.6%, 60대 이상 43.5%</strong> → 50~60대 합 <strong>91%</strong></td><td><a href="https://www.hapt.co.kr/news/articleView.html?idxno=155014">한국아파트신문</a></td></tr>
+        <tr><td>신규 합격자</td><td>2024년 합격자 50대 최다 (1,031명)</td><td>동일</td></tr>
+        <tr><td>진입 패턴</td><td><strong>퇴직 후 제2직업 진입 비율 높음</strong></td><td><a href="https://bravo.etoday.co.kr/view/atc_view/14429">브라보마이라이프</a></td></tr>
+      </tbody>
+    </table>
+    <p><strong>중요 시사</strong>: 디지털 네이티브가 아니다. <strong>모바일 PDF·웹대시보드보다 인쇄된 보고서·대면 미팅을 선호</strong>할 가능성이 높음.</p>
+
+    <h3>7-2. 임기·재계약 구조</h3>
+    <ul>
+      <li>위탁관리 단지의 경우 <strong>관리소장은 위탁관리회사 소속</strong>, 입대의는 사용자성이 없다는 것이 다수 판례. <span class="src">[<a href="https://legaltimes.co.kr/news/articleView.html?idxno=54652">리걸타임즈</a>, <a href="http://www.aptn.co.kr/news/articleView.html?idxno=64101">김미란 칼럼</a>]</span></li>
+      <li>다만 <strong>입대의가 위·수탁 계약 자체를 해지하면 소장이 사실상 교체</strong>되는 구조 → 관리소장은 <strong>입대의 눈치를 강하게 본다</strong>. <span class="src">[<a href="http://www.jkapt.com/12730">전국아파트신문 Q&amp;A</a>]</span></li>
+    </ul>
+
+    <h3>7-3. KPI / 두려움</h3>
+    <table>
+      <thead><tr><th>영역</th><th>관리소장의 진짜 두려움</th></tr></thead>
+      <tbody>
+        <tr><td>입대의 문책</td><td>공사 후 문제 발생 → 임의 교체 사유</td></tr>
+        <tr><td>민원</td><td>입주민 단톡방·동대표 항의</td></tr>
+        <tr><td>분쟁·소송</td><td>하자 발생 시 책임 추궁</td></tr>
+        <tr><td>비용 초과</td><td>장충금 부족으로 추가 부과 시 폭발적 민원</td></tr>
+      </tbody>
+    </table>
+
+    <h3>7-4. "감리 선임"이 실제로 책임 부담을 줄여주는가</h3>
+    <ul>
+      <li>공동주택관리법은 관리주체의 관리·감독 의무를 규정. <strong>외부 감리를 선임한다고 해서 관리주체의 책임이 자동 면제되지 않는다.</strong></li>
+      <li>다만 실무상 <strong>"객관적 감리 보고서"는 분쟁 시 강력한 방어 자료</strong>가 된다.</li>
+      <li>따라서 마케팅 메시지: <strong>"소장님 책임을 면제해드립니다"가 아니라 "소장님이 입대의와 입주민 앞에서 입증 가능한 증거를 갖게 해드립니다"</strong>가 정확하다.</li>
+    </ul>
+
+    <div class="insight">관리소장은 <strong>"공격하지 않는 영업"</strong>에 반응. 책임을 줄여주는 것이 아니라 <strong>방어 무기를 제공한다</strong>는 프레임이 정확하다.</div>
+  </section>
+
+  <!-- ============== 8 ============== -->
+  <section id="s8">
+    <h2><span class="h2-num">08</span>법·정책 트렌드 (최근 1~2년)</h2>
+
+    <h3>8-1. 주요 변화</h3>
+    <table>
+      <thead><tr><th>시점</th><th>내용</th><th>출처</th></tr></thead>
+      <tbody>
+        <tr><td>2024.12.27 시행</td><td><strong>공동주택관리법 시행규칙 [별표1] 장기수선계획 수립기준 개정</strong> — 피난시설 항목 신설</td><td><a href="https://www.law.go.kr/lsInfoP.do?lsiSeq=243079&viewCls=lsRvsDocInfoR">국가법령정보센터</a></td></tr>
+        <tr><td>2024년</td><td>관리주체의 하자보수 청구·내역 서류 보관 의무 신설</td><td>국가법령정보센터</td></tr>
+        <tr><td>2024년</td><td><strong>하자심사·분쟁조정위원회에 "재정" 기능 추가</strong></td><td>동일</td></tr>
+        <tr><td>진행 중</td><td>장기수선충당금 적립·사용 현황 공개 의무 강화 (매년 3월 말)</td><td><a href="http://www.gjhma.org/bbs/board.php?bo_table=notice&wr_id=1178">주택관리사협회</a></td></tr>
+        <tr><td>2024.07.10 시행</td><td>건축공사 감리세부기준 개정(국토부고시 제2024-377호)</td><td><a href="https://www.codil.or.kr/filebank/moct2014//202407/MOCT3212_0.PDF?nserialno=3212">codil.or.kr</a></td></tr>
+      </tbody>
+    </table>
+
+    <h3>8-2. 의무 감리 확대 움직임</h3>
+    <ul>
+      <li>감리 전문법인 신설안이 대한건축사협회의 반대 속에 추진 중. <span class="src">[<a href="https://www.ancnews.kr/news/articleView.html?idxno=17109">건축사신문</a>]</span> 다만 고층 건축물·신축 위주이며, 유지보수에 직접 적용된다는 명확한 신호는 본 조사로 확인되지 않음.</li>
+      <li>장기수선계획 공개 의무 강화 + 하자 서류 보관 의무 + 분쟁조정 재정 도입은 <strong>"공사 진행의 입증 가능성"을 사실상 강제하는 방향</strong> → 감리 보고서의 가치 상승 기대.</li>
+    </ul>
+
+    <div class="insight">법이 "감리 의무화"로 직진하지는 않지만, <strong>공개·기록·증빙 의무는 빠르게 강화 중</strong> → 감리 보고서가 시장 표준이 될 토양은 마련됨.</div>
+  </section>
+
+  <!-- ============== 9 ============== -->
+  <section id="s9">
+    <h2><span class="h2-num">09</span>기회·위협</h2>
+
+    <h3>9-1. 기회 (블루오션 후보)</h3>
+    <table>
+      <thead><tr><th>#</th><th>기회</th><th>근거</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td><strong>노후 단지 폭증 (90년대 1기 신도시)</strong></td><td>외벽도장·승강기·배관 재교체 사이클 도래</td></tr>
+        <tr><td>2</td><td><strong>장충금 2배 인상 → "왜 이 돈?"이라는 입주민 질문</strong></td><td><a href="https://www.newsis.com/view/NISX20240329_0002680479">뉴시스</a> → 감리=객관성 확보 수요</td></tr>
+        <tr><td>3</td><td>승강기 감리 덤핑 → 품질 사고 가능성</td><td><a href="http://www.aptn.co.kr/news/articleView.html?idxno=110600">아파트관리신문</a> → "프리미엄 브랜드" 빈자리</td></tr>
+        <tr><td>4</td><td><strong>분쟁조정 재정 기능 도입</strong></td><td>사전 감리 보고서가 결정적 증거</td></tr>
+        <tr><td>5</td><td>위탁관리 상위 10개사와 협력 가능성</td><td>표준화된 감리 패키지 협력사 풀 편입</td></tr>
+        <tr><td>6</td><td>유지보수 감리만 다루는 전국 브랜드 부재</td><td>대형은 신축, 소형은 1인 — "중간"이 비어있음</td></tr>
+      </tbody>
+    </table>
+
+    <h3>9-2. 위협</h3>
+    <table>
+      <thead><tr><th>#</th><th>위협</th><th>대응</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>가격 덤핑 압력</td><td>정량 보고서·차별화 산출물</td></tr>
+        <tr><td>2</td><td>법적 의무가 아님 → "필요한가요?"</td><td>사례·판례·분쟁 데이터로 ROI 설득</td></tr>
+        <tr><td>3</td><td>관리소장 평균 60대, 디지털 도달 어려움</td><td>업계지·협회·오프라인 강연 병행</td></tr>
+        <tr><td>4</td><td>건축사협회·엔지니어링협회 영역 갈등</td><td>협회 가입·자격 확보로 정통성</td></tr>
+        <tr><td>5</td><td>단지별 의사결정 분절 → 확장성 낮음</td><td>위탁관리회사·협회 채널 제휴</td></tr>
+      </tbody>
+    </table>
+
+    <h3>9-3. 3~5년 시장 전망 (가설)</h3>
+    <ul>
+      <li>의무관리단지 수 연 5~8% 증가 추세 + 노후 단지 비중 증가 + 장충금 적립단가 상승 → <strong>유지보수공사 발주 시장 자체는 연 8~12% 성장 추정</strong>.</li>
+      <li>감리 선임률이 현 추정 20~30%에서 50%로만 올라도 시장은 <strong>2배</strong>.</li>
+      <li>분쟁조정 재정 도입 효과가 가시화되면 (2026~2027), <strong>사전 감리 보고서는 사실상 표준화될 가능성</strong>.</li>
+    </ul>
+
+    <div class="insight">시장 자체보다 <strong>"감리를 안 쓰던 단지에 감리를 쓰게 만드는 카테고리 디자인"</strong>이 아파트스퀘어 성장의 핵심 변수.</div>
+  </section>
+
+  <!-- ============== 10 ============== -->
+  <section id="s10">
+    <h2><span class="h2-num">10</span>다음에 검증해야 할 가설 5가지</h2>
+
+    <table class="hyp-table">
+      <thead><tr><th>#</th><th>가설</th><th>검증 액션</th><th>측정 지표</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><span class="hyp-id">H1</span></td>
+          <td>관리소장은 APT너스 + 한국아파트신문/아파트관리신문 3개 매체에서 의사결정 정보의 80% 이상을 얻는다</td>
+          <td>(1) APT너스 최근 6개월 게시글 500개 분석 (2) 두 신문 최근 1년 1면·기획기사 50건 키워드 빈도 (3) 관리소장 10명 인터뷰</td>
+          <td>"정보를 얻는 매체 TOP3" 일치율</td>
+        </tr>
+        <tr>
+          <td><span class="hyp-id">H2</span></td>
+          <td>유지보수 감리 실질 선임률은 30% 미만, 단지·공사 규모 큰 경우만 50%+</td>
+          <td>K-apt 입찰결과 1년치 크롤링 → 외벽도장/방수/승강기 발주 단지 중 "감리용역" 별도 발주 비율</td>
+          <td>공사 종류·단지 규모별 감리 동반 발주율</td>
+        </tr>
+        <tr>
+          <td><span class="hyp-id">H3</span></td>
+          <td>위탁관리 상위 5개사 협력사 풀 편입 시 영업 비용이 1/3로 감소</td>
+          <td>우리관리 등 본사 협력사 등록 절차 조사 + 1차 미팅 + 파일럿 단지 3곳 매칭</td>
+          <td>CAC 단가 비교</td>
+        </tr>
+        <tr>
+          <td><span class="hyp-id">H4</span></td>
+          <td>관리소장이 진짜 사는 것은 '감리 서비스'가 아니라 '입대의 앞 표준 보고서 + 분쟁 증거'다</td>
+          <td>관리소장 8~10명 JTBD 인터뷰. "최근 1년 가장 큰 두려움", "그때 도움된 자료" 질문</td>
+          <td>응답 클러스터링 → 핵심 Job 정의</td>
+        </tr>
+        <tr>
+          <td><span class="hyp-id">H5</span></td>
+          <td>장충금 인상·분쟁조정 재정 도입이 '감리 선임 안건' 상정으로 실제 연결되고 있다</td>
+          <td>2024.01~2026.04 K-apt 입찰공고 중 '감리' 포함 공고 월별 추이 + 분쟁조정 신청 건수 비교</td>
+          <td>정책 변화 시점 ±6개월 입찰공고 증가율</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ============== TL;DR ============== -->
+  <section id="tldr" class="tldr">
+    <h2><span class="h2-num">★</span>종합 시사점 (TL;DR)</h2>
+    <ol>
+      <li><strong>법적 의무 시장이 아닌 리스크 회피 시장</strong>. 메시지는 "법 때문에"가 아니라 "분쟁·문책·증빙" 프레임.</li>
+      <li><strong>TAM은 작지 않으나 핵심은 "감리 선임률 자체를 올리는 카테고리 디자인"</strong>. 시장을 키우는 게임.</li>
+      <li><strong>B2B 의사결정의 100%는 관리소장을 통과</strong>. 디지털 광고보다 업계지+협회+APT너스 침투가 먼저.</li>
+      <li><strong>대형 CM은 신축이 본업, 소형은 1인 영세</strong> → "유지보수 전문 중견 브랜드"는 카테고리 공백 상태.</li>
+      <li><strong>위탁관리 상위사(우리관리 등)와의 B2B2B 파트너십</strong>이 가장 빠른 확장 경로.</li>
+      <li><strong>노후 1기 신도시·장충금 인상·분쟁조정 재정 도입</strong>이라는 3대 트렌드가 향후 3~5년 시장 부양 요인.</li>
+    </ol>
+  </section>
+
+  <!-- ============== Limitations ============== -->
+  <div class="limits">
+    <div class="label">조사 한계 종합</div>
+    유지보수 감리 시장의 절대 규모(매출 기준), 감리 선임률, 업계지 광고단가, 위탁관리 상위사의 협력사 등록 기준 — 모두 공개 자료 부재. <strong>K-apt 입찰결과 크롤링 + 관리소장 인터뷰 + 업계지 영업팀 직접 컨택</strong>이 다음 단계 데이터 보강 액션. "아파트스퀘어" 자체에 대한 공개 정보가 본 조사에서 검색되지 않음 — 브랜드 인지도가 아직 낮은 단계로 추정.
+  </div>
+
+</div>
+
+</body>
+</html>

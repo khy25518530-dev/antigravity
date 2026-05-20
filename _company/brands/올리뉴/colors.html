@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>올리뉴 — 컬러 팔레트 비교</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', sans-serif;
+    background: #f5f5f0;
+    color: #2a2a2a;
+    line-height: 1.6;
+  }
+
+  /* 상단 안내 */
+  .top-banner {
+    background: #1a1a1a;
+    color: white;
+    padding: 14px 24px;
+    font-size: 13px;
+    text-align: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .top-banner a {
+    color: #d4a574;
+    margin-left: 12px;
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  /* 페이지 헤더 */
+  .page-header {
+    text-align: center;
+    padding: 80px 24px 40px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .page-header h1 {
+    font-size: 42px;
+    font-weight: 800;
+    margin-bottom: 16px;
+    color: #1a1a1a;
+  }
+  .page-header p {
+    font-size: 17px;
+    color: #6b6b6b;
+    margin-bottom: 8px;
+  }
+  .page-header .guide {
+    display: inline-block;
+    margin-top: 20px;
+    background: white;
+    padding: 16px 24px;
+    border-radius: 12px;
+    font-size: 14px;
+    color: #555;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+  }
+
+  /* 비교 그리드 */
+  .palette-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+  }
+  @media (max-width: 900px) {
+    .palette-grid { grid-template-columns: 1fr; }
+    .page-header h1 { font-size: 30px; }
+  }
+
+  /* 팔레트 카드 */
+  .palette {
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .palette:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+  }
+
+  /* 팔레트 라벨 */
+  .palette-label {
+    padding: 24px 28px 16px;
+    border-bottom: 1px solid #eee;
+  }
+  .palette-name {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+  }
+  .option-tag {
+    display: inline-block;
+    background: #2a2a2a;
+    color: white;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 28px;
+    font-weight: 800;
+    font-size: 14px;
+  }
+  .palette-name h2 {
+    font-size: 20px;
+    font-weight: 700;
+  }
+  .palette-mood {
+    font-size: 14px;
+    color: #888;
+    margin-bottom: 14px;
+  }
+  .palette-ref {
+    display: inline-block;
+    font-size: 12px;
+    color: #aaa;
+    background: #f7f7f4;
+    padding: 4px 10px;
+    border-radius: 12px;
+  }
+
+  /* 컬러 칩 */
+  .color-chips {
+    display: flex;
+    gap: 8px;
+    padding: 16px 28px;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  .chip {
+    flex: 1;
+    border-radius: 8px;
+    padding: 14px 12px;
+    color: white;
+    font-size: 11px;
+    font-family: 'SF Mono', Menlo, Monaco, monospace;
+    text-align: center;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  }
+  .chip.light { color: #2a2a2a; }
+  .chip-name { font-size: 10px; opacity: 0.7; display: block; margin-bottom: 2px; letter-spacing: 0.5px; }
+  .chip-hex { font-weight: 700; }
+
+  /* 미니 프리뷰 */
+  .mini-preview {
+    padding: 32px 28px;
+    position: relative;
+  }
+  .mini-logo {
+    font-weight: 800;
+    letter-spacing: 2px;
+    font-size: 14px;
+    margin-bottom: 24px;
+  }
+  .mini-hero {
+    padding: 32px 24px;
+    border-radius: 12px;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .mini-tag {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 16px;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    margin-bottom: 12px;
+  }
+  .mini-headline {
+    font-size: 22px;
+    font-weight: 800;
+    line-height: 1.3;
+    margin-bottom: 8px;
+  }
+  .mini-sub {
+    font-size: 12px;
+    opacity: 0.85;
+    margin-bottom: 16px;
+  }
+  .mini-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    margin: 0 4px;
+  }
+
+  /* 미니 카드 */
+  .mini-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .mini-card {
+    padding: 16px;
+    border-radius: 10px;
+    border: 1px solid #eee;
+    background: white;
+  }
+  .mini-card-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    color: white;
+    margin-bottom: 10px;
+  }
+  .mini-card-title {
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .mini-card-desc {
+    font-size: 11px;
+    color: #888;
+    line-height: 1.5;
+  }
+
+  /* 점수표 */
+  .score-bar {
+    padding: 20px 28px;
+    background: #fafafa;
+    border-top: 1px solid #eee;
+    font-size: 12px;
+  }
+  .score-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4px 0;
+  }
+  .score-label { color: #888; }
+  .stars { color: #d4a574; letter-spacing: 2px; }
+
+  /* 푸터 */
+  .footer-note {
+    background: white;
+    padding: 60px 24px;
+    text-align: center;
+    border-top: 1px solid #eee;
+  }
+  .footer-note h3 {
+    font-size: 22px;
+    margin-bottom: 16px;
+  }
+  .footer-note p {
+    color: #666;
+    font-size: 15px;
+    max-width: 600px;
+    margin: 0 auto 24px;
+  }
+
+  /* === 6가지 팔레트 === */
+
+  /* 🅐 다크 그린 + 골드 (현재 시안) */
+  .p-a .mini-hero { background: linear-gradient(135deg, #1e3f27 0%, #2d5d3a 100%); color: white; }
+  .p-a .mini-tag { background: rgba(212,165,116,0.2); color: #d4a574; border: 1px solid rgba(212,165,116,0.4); }
+  .p-a .mini-btn.primary { background: #d4a574; color: #1e3f27; }
+  .p-a .mini-btn.secondary { background: transparent; color: white; border: 1px solid white; }
+  .p-a .mini-card-icon { background: #2d5d3a; }
+  .p-a .mini-card-title { color: #2d5d3a; }
+
+  /* 🅑 딥 네이비 + 코퍼 */
+  .p-b .mini-hero { background: linear-gradient(135deg, #0f1d3a 0%, #1a2d4a 100%); color: white; }
+  .p-b .mini-tag { background: rgba(200,120,80,0.2); color: #c87850; border: 1px solid rgba(200,120,80,0.4); }
+  .p-b .mini-btn.primary { background: #c87850; color: white; }
+  .p-b .mini-btn.secondary { background: transparent; color: white; border: 1px solid white; }
+  .p-b .mini-card-icon { background: #1a2d4a; }
+  .p-b .mini-card-title { color: #1a2d4a; }
+
+  /* 🅒 차콜 + 머스타드 */
+  .p-c .mini-hero { background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%); color: white; }
+  .p-c .mini-tag { background: rgba(212,162,58,0.2); color: #d4a23a; border: 1px solid rgba(212,162,58,0.4); }
+  .p-c .mini-btn.primary { background: #d4a23a; color: #1a1a1a; }
+  .p-c .mini-btn.secondary { background: transparent; color: white; border: 1px solid white; }
+  .p-c .mini-card-icon { background: #2a2a2a; }
+  .p-c .mini-card-title { color: #1a1a1a; }
+
+  /* 🅓 그레이 + 우드 */
+  .p-d .mini-hero { background: linear-gradient(135deg, #2a2a2a 0%, #3a3a3a 100%); color: white; }
+  .p-d .mini-tag { background: rgba(184,140,90,0.2); color: #b88c5a; border: 1px solid rgba(184,140,90,0.4); }
+  .p-d .mini-btn.primary { background: #b88c5a; color: white; }
+  .p-d .mini-btn.secondary { background: transparent; color: white; border: 1px solid white; }
+  .p-d .mini-card-icon { background: #3a3a3a; }
+  .p-d .mini-card-title { color: #2a2a2a; }
+
+  /* 🅔 블랙 + 골드 */
+  .p-e .mini-hero { background: linear-gradient(135deg, #000000 0%, #0a0a0a 100%); color: white; }
+  .p-e .mini-tag { background: rgba(201,160,78,0.15); color: #c9a04e; border: 1px solid rgba(201,160,78,0.4); }
+  .p-e .mini-btn.primary { background: #c9a04e; color: #000; }
+  .p-e .mini-btn.secondary { background: transparent; color: #c9a04e; border: 1px solid #c9a04e; }
+  .p-e .mini-card-icon { background: #0a0a0a; }
+  .p-e .mini-card-title { color: #0a0a0a; }
+
+  /* 🅕 베이지 + 그린 액센트 */
+  .p-f .mini-hero { background: linear-gradient(135deg, #f5efe6 0%, #e8e0d0 100%); color: #2d5d3a; }
+  .p-f .mini-tag { background: #2d5d3a; color: #f5efe6; }
+  .p-f .mini-btn.primary { background: #2d5d3a; color: white; }
+  .p-f .mini-btn.secondary { background: transparent; color: #2d5d3a; border: 1px solid #2d5d3a; }
+  .p-f .mini-card-icon { background: #2d5d3a; }
+  .p-f .mini-card-title { color: #2d5d3a; }
+
+  /* 🅖 딥 포레스트 + 웜 베이지 + 코퍼 (★ 추천) */
+  .p-g .mini-hero { background: linear-gradient(135deg, #1a3a26 0%, #2d4f35 100%); color: #f5ebd9; }
+  .p-g .mini-tag { background: rgba(232,168,116,0.18); color: #e8a874; border: 1px solid rgba(232,168,116,0.45); }
+  .p-g .mini-btn.primary { background: #e8a874; color: #1a3a26; }
+  .p-g .mini-btn.secondary { background: transparent; color: #f5ebd9; border: 1px solid #f5ebd9; }
+  .p-g .mini-cards { background: #f5ebd9; padding: 14px; border-radius: 10px; margin-top: -8px; }
+  .p-g .mini-card { background: white; border-color: #e8dcc6; }
+  .p-g .mini-card-icon { background: linear-gradient(135deg, #1a3a26, #2d4f35); }
+  .p-g .mini-card-title { color: #1a3a26; }
+
+  /* 🅗 딥 차콜 + 웜 베이지 + 코퍼 (★ 추천) */
+  .p-h .mini-hero { background: linear-gradient(135deg, #1f1d1a 0%, #2e2b27 100%); color: #f0e6d5; }
+  .p-h .mini-tag { background: rgba(216,140,90,0.18); color: #d88c5a; border: 1px solid rgba(216,140,90,0.45); }
+  .p-h .mini-btn.primary { background: #d88c5a; color: #1f1d1a; }
+  .p-h .mini-btn.secondary { background: transparent; color: #f0e6d5; border: 1px solid #f0e6d5; }
+  .p-h .mini-cards { background: #f0e6d5; padding: 14px; border-radius: 10px; margin-top: -8px; }
+  .p-h .mini-card { background: white; border-color: #e0d4bf; }
+  .p-h .mini-card-icon { background: linear-gradient(135deg, #1f1d1a, #2e2b27); }
+  .p-h .mini-card-title { color: #1f1d1a; }
+
+  /* 추천 배지 */
+  .recommended {
+    position: relative;
+    border: 2px solid #d4a23a;
+  }
+  .recommended::before {
+    content: '★ 추천';
+    position: absolute;
+    top: -12px;
+    right: 24px;
+    background: linear-gradient(135deg, #d4a23a, #b88820);
+    color: white;
+    padding: 4px 14px;
+    border-radius: 14px;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    z-index: 10;
+    box-shadow: 0 2px 8px rgba(212,162,58,0.4);
+  }
+</style>
+</head>
+<body>
+
+<div class="top-banner">
+  🎨 <strong>올리뉴 브랜드 컬러 비교</strong> — 6가지 팔레트를 같은 디자인에 적용한 미리보기
+  <a href="preview.html">← 메인 페이지로</a>
+  <a href="service.html">서비스 페이지로</a>
+</div>
+
+<div class="page-header">
+  <h1>어떤 컬러가 올리뉴와 가장 잘 맞나요?</h1>
+  <p>같은 디자인·같은 카피, 컬러만 다르게 적용해서 비교할 수 있게 만들었어요.</p>
+  <p>각 팔레트의 무드 점수도 함께 확인해 보세요.</p>
+  <div class="guide" style="background:linear-gradient(135deg,#fff8eb,#fef3d8); border:1px solid #f0d490;">
+    🌟 <strong>브랜드 방향성</strong> — 감성(따뜻함) + 테크 + 프리미엄 모두 잡기<br>
+    <span style="color:#8a5a00; font-weight:600;">→ 가장 추천: <strong>G (딥 포레스트 + 웜 베이지 + 코퍼)</strong> 또는 <strong>H (딥 차콜 + 웜 베이지 + 코퍼)</strong></span>
+  </div>
+  <div class="guide" style="margin-top:12px;">
+    💡 <strong>비교 팁</strong> — 멀리 떨어져 보세요. 첫 인상에서 끌리는 게 가장 정답에 가깝습니다.
+  </div>
+</div>
+
+<div class="palette-grid">
+
+  <!-- 🅐 다크 그린 + 골드 (현재 시안) -->
+  <div class="palette p-a">
+    <div class="palette-label">
+      <div class="palette-name">
+        <span class="option-tag">A</span>
+        <h2>다크 그린 + 골드</h2>
+      </div>
+      <div class="palette-mood">자연·신뢰·프리미엄 (현재 시안)</div>
+      <span class="palette-ref">참고: Aesop · 르샵 · 자연주의 브랜드</span>
+    </div>
+    <div class="color-chips">
+      <div class="chip" style="background:#2d5d3a;"><span class="chip-name">PRIMARY</span><span class="chip-hex">#2d5d3a</span></div>
+      <div class="chip" style="background:#1e3f27;"><span class="chip-name">DARK</span><span class="chip-hex">#1e3f27</span></div>
+      <div class="chip" style="background:#d4a574; color:#3a2a1a;"><span class="chip-name">ACCENT</span><span class="chip-hex">#d4a574</span></div>
+      <div class="chip light" style="background:#faf8f5;"><span class="chip-name">BG</span><span class="chip-hex">#faf8f5</span></div>
+    </div>
+    <div class="mini-preview">
+      <div class="mini-logo">ALL RENEW</div>
+      <div class="mini-hero">
+        <div class="mini-tag">A BRAND OF 넷폼알앤디</div>
+        <div class="mini-headline">기술로 다시 짓는<br>공간의 경험</div>
+        <div class="mini-sub">AI · 모듈러 · 로봇 시공</div>
+        <a class="mini-btn primary">상담 신청</a>
+        <a class="mini-btn secondary">서비스 알아보기</a>
+      </div>
+      <div class="mini-cards">
+        <div class="mini-card">
+          <div class="mini-card-icon">🔇</div>
+          <div class="mini-card-title">층간소음 저감</div>
+          <div class="mini-card-desc">기술로 잡습니다</div>
+        </div>
+        <div class="mini-card">
+          <div class="mini-card-icon">🌬️</div>
+          <div class="mini-card-title">공기질 개선</div>
+          <div class="mini-card-desc">깨끗한 실내</div>
+        </div>
+      </div>
+    </div>
+    <div class="score-bar">
+      <div class="score-row"><span class="score-label">신뢰감·고급감</span><span class="stars">★★★★★</span></div>
+      <div class="score-row"><span class="score-label">기술·혁신감</span><span class="stars">★★★☆☆</span></div>
+      <div class="score-row"><span class="score-label">따뜻함·친근함</span><span class="stars">★★★★☆</span></div>
+      <div class="score-row"><span class="score-label">인테리어 정합성</span><span class="stars">★★★★☆</span></div>
+    </div>
+  </div>
+
+  <!-- 🅑 딥 네이비 + 코퍼 -->
+  <div class="palette p-b">
+    <div class="palette-label">
+      <div class="palette-name">
+        <span class="option-tag">B</span>
+        <h2>딥 네이비 + 코퍼</h2>
+      </div>
+      <div class="palette-mood">기술·도시·신뢰</div>
+      <span class="palette-ref">참고: 현대카드 · 삼성 · 테크 브랜드</span>
+    </div>
+    <div class="color-chips">
+      <div class="chip" style="background:#1a2d4a;"><span class="chip-name">PRIMARY</span><span class="chip-hex">#1a2d4a</span></div>
+      <div class="chip" style="background:#0f1d3a;"><span class="chip-name">DARK</span><span class="chip-hex">#0f1d3a</span></div>
+      <div class="chip" style="background:#c87850;"><span class="chip-name">ACCENT</span><span class="chip-hex">#c87850</span></div>
+      <div class="chip light" style="background:#f5f7fa;"><span class="chip-name">BG</span><span class="chip-hex">#f5f7fa</span></div>
+    </div>
+    <div class="mini-preview">
+      <div class="mini-logo">ALL RENEW</div>
+      <div class="mini-hero">
+        <div class="mini-tag">A BRAND OF 넷폼알앤디</div>
+        <div class="mini-headline">기술로 다시 짓는<br>공간의 경험</div>
+        <div class="mini-sub">AI · 모듈러 · 로봇 시공</div>
+        <a class="mini-btn primary">상담 신청</a>
+        <a class="mini-btn secondary">서비스 알아보기</a>
+      </div>
+      <div class="mini-cards">
+        <div class="mini-card">
+          <div class="mini-card-icon">🔇</div>
+          <div class="mini-card-title">층간소음 저감</div>
+          <div class="mini-card-desc">기술로 잡습니다</div>
+        </div>
+        <div class="mini-card">
+          <div class="mini-card-icon">🌬️</div>
+          <div class="mini-card-title">공기질 개선</div>
+          <div class="mini-card-desc">깨끗한 실내</div>
+        </div>
+      </div>
+    </div>
+    <div class="score-bar">
+      <div class="score-row"><span class="score-label">신뢰감·고급감</span><span class="stars">★★★★★</span></div>
+      <div class="score-row"><span class="score-label">기술·혁신감</span><span class="stars">★★★★★</span></div>
+      <div class="score-row"><span class="score-label">따뜻함·친근함</span><span class="stars">★★★☆☆</span></div>
+      <div class="score-row"><span class="score-label">인테리어 정합성</span><span class="stars">★★★☆☆</span></div>
+    </div>
+  </div>
+
+  <!-- 🅒 차콜 + 머스타드 -->
+  <div class="palette p-c">
+    <div class="palette-label">
+      <div class="palette-name">
+        <span class="option-tag">C</span>
+        <h2>차콜 + 머스타드</h2>
+      </div>
+      <div class="palette-mood">모던·미래·임팩트</div>
+      <span class="palette-ref">참고: 토스 · 무신사 · 강한 D2C 브랜드</span>
+    </div>
+    <div class="color-chips">
+      <div class="chip" style="background:#2a2a2a;"><span class="chip-name">PRIMARY</span><span class="chip-hex">#2a2a2a</span></div>
+      <div class="chip" style="background:#1a1a1a;"><span class="chip-name">DARK</span><span class="chip-hex">#1a1a1a</span></div>
+      <div class="chip" style="background:#d4a23a;"><span class="chip-name">ACCENT</span><span class="chip-hex">#d4a23a</span></div>
+      <div class="chip light" style="background:#fafafa;"><span class="chip-name">BG</span><span class="chip-hex">#fafafa</span></div>
+    </div>
+    <div class="mini-preview">
+      <div class="mini-logo">ALL RENEW</div>
+      <div class="mini-hero">
+        <div class="mini-tag">A BRAND OF 넷폼알앤디</div>
+        <div class="mini-headline">기술로 다시 짓는<br>공간의 경험</div>
+        <div class="mini-sub">AI · 모듈러 · 로봇 시공</div>
+        <a class="mini-btn primary">상담 신청</a>
+        <a class="mini-btn secondary">서비스 알아보기</a>
+      </div>
+      <div class="mini-cards">
+        <div class="mini-card">
+          <div class="mini-card-icon">🔇</div>
+          <div class="mini-card-title">층간소음 저감</div>
+          <div class="mini-card-desc">기술로 잡습니다</div>
+        </div>
+        <div class="mini-card">
+          <div class="mini-card-icon">🌬️</div>
+          <div class="mini-card-title">공기질 개선</div>
+          <div class="mini-card-desc">깨끗한 실내</div>
+        </div>
+      </div>
+    </div>
+    <div class="score-bar">
+      <div class="score-row"><span class="score-label">신뢰감·고급감</span><span class="stars">★★★★☆</span></div>
+      <div class="score-row"><span class="score-label">기술·혁신감</span><span class="stars">★★★★★</span></div>
+      <div class="score-row"><span class="score-label">따뜻함·친근함</span><span class="stars">★★☆☆☆</span></div>
+      <div class="score-row"><span class="score-label">인테리어 정합성</span><span class="stars">★★★☆☆</span></div>
+    </div>
+  </div>
+
+  <!-- 🅓 그레이 + 우드 -->
+  <div class="palette p-d">
+    <div class="palette-label">
+      <div class="palette-name">
+        <span class="option-tag">D</span>
+        <h2>그레이 + 우드</h2>
+      </div>
+      <div class="palette-mood">정통 인테리어·미니멀</div>
+      <span class="palette-ref">참고: 무인양품 · 한샘 · 정통 인테리어 브랜드</span>
+    </div>
+    <div class="color-chips">
+      <div class="chip" style="background:#3a3a3a;"><span class="chip-name">PRIMARY</span><span class="chip-hex">#3a3a3a</span></div>
+      <div class="chip" style="background:#2a2a2a;"><span class="chip-name">DARK</span><span class="chip-hex">#2a2a2a</span></div>
+      <div class="chip" style="background:#b88c5a;"><span class="chip-name">ACCENT</span><span class="chip-hex">#b88c5a</span></div>
+      <div class="chip light" style="background:#f8f6f2;"><span class="chip-name">BG</span><span class="chip-hex">#f8f6f2</span></div>
+    </div>
+    <div class="mini-preview">
+      <div class="mini-logo">ALL RENEW</div>
+      <div class="mini-hero">
+        <div class="mini-tag">A BRAND OF 넷폼알앤디</div>
+        <div class="mini-headline">기술로 다시 짓는<br>공간의 경험</div>
+        <div class="mini-sub">AI · 모듈러 · 로봇 시공</div>
+        <a class="mini-btn primary">상담 신청</a>
+        <a class="mini-btn secondary">서비스 알아보기</a>
+      </div>
+      <div class="mini-cards">
+        <div class="mini-card">
+          <div class="mini-card-icon">🔇</div>
+          <div class="mini-card-title">층간소음 저감</div>
+          <div class="mini-card-desc">기술로 잡습니다</div>
+        </div>
+        <div class="mini-card">
+          <div class="mini-card-icon">🌬️</div>
+          <div class="mini-card-title">공기질 개선</div>
+          <div class="mini-card-desc">깨끗한 실내</div>
+        </div>
+      </div>
+    </div>
+    <div class="score-bar">
+      <div class="score-row"><span class="score-label">신뢰감·고급감</span><span class="stars">★★★★☆</span></div>
+      <div class="score-row"><span class="score-label">기술·혁신감</span><span class="stars">★★★☆☆</span></div>
+      <div class="score-row"><span class="score-label">따뜻함·친근함</span><span class="stars">★★★★☆</span></div>
+      <div class="score-row"><span class="score-label">인테리어 정합성</span><span class="stars">★★★★★</span></div>
+    </div>
+  </div>
+
+  <!-- 🅔 블랙 + 골드 -->
+  <div class="palette p-e">
+    <div class="palette-label">
+      <div class="palette-name">
+        <span class="option-tag">E</span>
+        <h2>블랙 + 골드</h2>
+      </div>
+      <div class="palette-mood">하이엔드·럭셔리</div>
+      <span class="palette-ref">참고: 디뮤지엄 · 갤러리아 · 럭셔리 브랜드</span>
+    </div>
+    <div class="color-chips">
+      <div class="chip" style="background:#0a0a0a;"><span class="chip-name">PRIMARY</span><span class="chip-hex">#0a0a0a</span></div>
+      <div class="chip" style="background:#000000;"><span class="chip-name">DARK</span><span class="chip-hex">#000000</span></div>
+      <div class="chip" style="background:#c9a04e;"><span class="chip-name">ACCENT</span><span class="chip-hex">#c9a04e</span></div>
+      <div class="chip light" style="background:#ffffff;"><span class="chip-name">BG</span><span class="chip-hex">#ffffff</span></div>
+    </div>
+    <div class="mini-preview">
+      <div class="mini-logo">ALL RENEW</div>
+      <div class="mini-hero">
+        <div class="mini-tag">A BRAND OF 넷폼알앤디</div>
+        <div class="mini-headline">기술로 다시 짓는<br>공간의 경험</div>
+        <div class="mini-sub">AI · 모듈러 · 로봇 시공</div>
+        <a class="mini-btn primary">상담 신청</a>
+        <a class="mini-btn secondary">서비스 알아보기</a>
+      </div>
+      <div class="mini-cards">
+        <div class="mini-card">
+          <div class="mini-card-icon">🔇</div>
+          <div class="mini-card-title">층간소음 저감</div>
+          <div class="mini-card-desc">기술로 잡습니다</div>
+        </div>
+        <div class="mini-card">
+          <div class="mini-card-icon">🌬️</div>
+          <div class="mini-card-title">공기질 개선</div>
+          <div class="mini-card-desc">깨끗한 실내</div>
+        </div>
+      </div>
+    </div>
+    <div class="score-bar">
+      <div class="score-row"><span class="score-label">신뢰감·고급감</span><span class="stars">★★★★★</span></div>
+      <div class="score-row"><span class="score-label">기술·혁신감</span><span class="stars">★★★★☆</span></div>
+      <div class="score-row"><span class="score-label">따뜻함·친근함</span><span class="stars">★☆☆☆☆</span></div>
+      <div class="score-row"><span class="score-label">인테리어 정합성</span><span class="stars">★★★☆☆</span></div>
+    </div>
+  </div>
+
+  <!-- 🅕 베이지 + 그린 액센트 -->
+  <div class="palette p-f">
+    <div class="palette-label">
+      <div class="palette-name">
+        <span class="option-tag">F</span>
+        <h2>베이지 + 그린 액센트</h2>
+      </div>
+      <div class="palette-mood">친근·따뜻·생활 친화</div>
+      <span class="palette-ref">참고: LG오브제 · 까사미아 · 라이프스타일 브랜드</span>
+    </div>
+    <div class="color-chips">
+      <div class="chip light" style="background:#f5efe6;"><span class="chip-name">PRIMARY</span><span class="chip-hex">#f5efe6</span></div>
+      <div class="chip light" style="background:#e8e0d0;"><span class="chip-name">SUB</span><span class="chip-hex">#e8e0d0</span></div>
+      <div class="chip" style="background:#2d5d3a;"><span class="chip-name">ACCENT</span><span class="chip-hex">#2d5d3a</span></div>
+      <div class="chip light" style="background:#ffffff;"><span class="chip-name">BG</span><span class="chip-hex">#ffffff</span></div>
+    </div>
+    <div class="mini-preview">
+      <div class="mini-logo" style="color:#2d5d3a;">ALL RENEW</div>
+      <div class="mini-hero">
+        <div class="mini-tag">A BRAND OF 넷폼알앤디</div>
+        <div class="mini-headline">기술로 다시 짓는<br>공간의 경험</div>
+        <div class="mini-sub">AI · 모듈러 · 로봇 시공</div>
+        <a class="mini-btn primary">상담 신청</a>
+        <a class="mini-btn secondary">서비스 알아보기</a>
+      </div>
+      <div class="mini-cards">
+        <div class="mini-card">
+          <div class="mini-card-icon">🔇</div>
+          <div class="mini-card-title">층간소음 저감</div>
+          <div class="mini-card-desc">기술로 잡습니다</div>
+        </div>
+        <div class="mini-card">
+          <div class="mini-card-icon">🌬️</div>
+          <div class="mini-card-title">공기질 개선</div>
+          <div class="mini-card-desc">깨끗한 실내</div>
+        </div>
+      </div>
+    </div>
+    <div class="score-bar">
+      <div class="score-row"><span class="score-label">신뢰감·고급감</span><span class="stars">★★★☆☆</span></div>
+      <div class="score-row"><span class="score-label">기술·혁신감</span><span class="stars">★★☆☆☆</span></div>
+      <div class="score-row"><span class="score-label">따뜻함·친근함</span><span class="stars">★★★★★</span></div>
+      <div class="score-row"><span class="score-label">인테리어 정합성</span><span class="stars">★★★★★</span></div>
+    </div>
+  </div>
+
+  <!-- 🅖 딥 포레스트 + 웜 베이지 + 코퍼 (★ 추천) -->
+  <div class="palette p-g recommended">
+    <div class="palette-label">
+      <div class="palette-name">
+        <span class="option-tag" style="background:#d4a23a;">G</span>
+        <h2>딥 포레스트 + 웜 베이지 + 코퍼</h2>
+      </div>
+      <div class="palette-mood">자연 감성 + 따뜻함 + 프리미엄 (★ 사용자 요구사항 기반 추천)</div>
+      <span class="palette-ref">참고: Aesop · 르라보 · 감성 프리미엄 브랜드</span>
+    </div>
+    <div class="color-chips">
+      <div class="chip" style="background:#1a3a26;"><span class="chip-name">PRIMARY</span><span class="chip-hex">#1a3a26</span></div>
+      <div class="chip" style="background:#2d4f35;"><span class="chip-name">SUB</span><span class="chip-hex">#2d4f35</span></div>
+      <div class="chip" style="background:#e8a874; color:#3a2a1a;"><span class="chip-name">ACCENT</span><span class="chip-hex">#e8a874</span></div>
+      <div class="chip light" style="background:#f5ebd9;"><span class="chip-name">WARM BG</span><span class="chip-hex">#f5ebd9</span></div>
+    </div>
+    <div class="mini-preview">
+      <div class="mini-logo">ALL RENEW</div>
+      <div class="mini-hero">
+        <div class="mini-tag">A BRAND OF 넷폼알앤디</div>
+        <div class="mini-headline">기술로 다시 짓는<br>공간의 경험</div>
+        <div class="mini-sub">AI · 모듈러 · 로봇 시공</div>
+        <a class="mini-btn primary">상담 신청</a>
+        <a class="mini-btn secondary">서비스 알아보기</a>
+      </div>
+      <div class="mini-cards">
+        <div class="mini-card">
+          <div class="mini-card-icon">🔇</div>
+          <div class="mini-card-title">층간소음 저감</div>
+          <div class="mini-card-desc">기술로 잡습니다</div>
+        </div>
+        <div class="mini-card">
+          <div class="mini-card-icon">🌬️</div>
+          <div class="mini-card-title">공기질 개선</div>
+          <div class="mini-card-desc">깨끗한 실내</div>
+        </div>
+      </div>
+    </div>
+    <div class="score-bar">
+      <div class="score-row"><span class="score-label">신뢰감·고급감</span><span class="stars">★★★★★</span></div>
+      <div class="score-row"><span class="score-label">기술·혁신감</span><span class="stars">★★★★☆</span></div>
+      <div class="score-row"><span class="score-label">따뜻함·감성</span><span class="stars">★★★★★</span></div>
+      <div class="score-row"><span class="score-label">인테리어 정합성</span><span class="stars">★★★★★</span></div>
+    </div>
+  </div>
+
+  <!-- 🅗 딥 차콜 + 웜 베이지 + 코퍼 (★ 추천) -->
+  <div class="palette p-h recommended">
+    <div class="palette-label">
+      <div class="palette-name">
+        <span class="option-tag" style="background:#d4a23a;">H</span>
+        <h2>딥 차콜 + 웜 베이지 + 코퍼</h2>
+      </div>
+      <div class="palette-mood">모던 럭셔리 + 따뜻함 + 테크 (★ 사용자 요구사항 기반 추천)</div>
+      <span class="palette-ref">참고: 패션5 · 현대카드 디자인 · 모던 럭셔리 브랜드</span>
+    </div>
+    <div class="color-chips">
+      <div class="chip" style="background:#1f1d1a;"><span class="chip-name">PRIMARY</span><span class="chip-hex">#1f1d1a</span></div>
+      <div class="chip" style="background:#2e2b27;"><span class="chip-name">SUB</span><span class="chip-hex">#2e2b27</span></div>
+      <div class="chip" style="background:#d88c5a;"><span class="chip-name">ACCENT</span><span class="chip-hex">#d88c5a</span></div>
+      <div class="chip light" style="background:#f0e6d5;"><span class="chip-name">WARM BG</span><span class="chip-hex">#f0e6d5</span></div>
+    </div>
+    <div class="mini-preview">
+      <div class="mini-logo">ALL RENEW</div>
+      <div class="mini-hero">
+        <div class="mini-tag">A BRAND OF 넷폼알앤디</div>
+        <div class="mini-headline">기술로 다시 짓는<br>공간의 경험</div>
+        <div class="mini-sub">AI · 모듈러 · 로봇 시공</div>
+        <a class="mini-btn primary">상담 신청</a>
+        <a class="mini-btn secondary">서비스 알아보기</a>
+      </div>
+      <div class="mini-cards">
+        <div class="mini-card">
+          <div class="mini-card-icon">🔇</div>
+          <div class="mini-card-title">층간소음 저감</div>
+          <div class="mini-card-desc">기술로 잡습니다</div>
+        </div>
+        <div class="mini-card">
+          <div class="mini-card-icon">🌬️</div>
+          <div class="mini-card-title">공기질 개선</div>
+          <div class="mini-card-desc">깨끗한 실내</div>
+        </div>
+      </div>
+    </div>
+    <div class="score-bar">
+      <div class="score-row"><span class="score-label">신뢰감·고급감</span><span class="stars">★★★★★</span></div>
+      <div class="score-row"><span class="score-label">기술·혁신감</span><span class="stars">★★★★★</span></div>
+      <div class="score-row"><span class="score-label">따뜻함·감성</span><span class="stars">★★★★☆</span></div>
+      <div class="score-row"><span class="score-label">인테리어 정합성</span><span class="stars">★★★★☆</span></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- 푸터 안내 -->
+<div class="footer-note">
+  <h3>💭 결정 가이드</h3>
+  <p style="background:linear-gradient(135deg,#fff8eb,#fef3d8); padding:20px; border-radius:12px; border:1px solid #f0d490;">
+    🌟 <strong>"감성(따뜻함) + 테크 + 프리미엄"</strong> 모두 잡고 싶다면<br>
+    → <strong>G (딥 포레스트 + 웜 베이지 + 코퍼)</strong> 또는 <strong>H (딥 차콜 + 웜 베이지 + 코퍼)</strong>가 가장 적합해요.
+  </p>
+  <p style="margin-top:20px;">
+    <strong>G와 H의 차이</strong><br>
+    · <strong>G</strong>는 그린 베이스라 <em>자연·신뢰·정통</em> 무드가 더 강해요 (인테리어 정통감 ↑)<br>
+    · <strong>H</strong>는 차콜 베이스라 <em>모던·테크·시크</em> 무드가 더 강해요 (혁신감 ↑)<br>
+    공통: <em>웜 베이지 + 코퍼</em>가 따뜻함과 프리미엄을 동시에 잡아줘요.
+  </p>
+  <p style="margin-top:20px;">
+    그 외 옵션은 한쪽에만 치우쳐 있어요:<br>
+    · 기술·미래·혁신만 → B, C / 따뜻함·생활만 → F / 프리미엄·하이엔드만 → E / 정통 인테리어만 → D / 균형형(현재 시안) → A
+  </p>
+  <p style="margin-top:24px;">
+    💡 마음에 드는 팔레트 알려주시면 메인 페이지·서비스 페이지에 그 컬러로 전체 적용해드릴게요.<br>
+    또는 <strong>넷폼알앤디의 코퍼레이트 컬러</strong>가 있다면 알려주세요 — 거기 맞춰 추가 옵션을 만들겠습니다.
+  </p>
+</div>
+
+</body>
+</html>
